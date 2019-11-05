@@ -12,9 +12,7 @@ class WeatherAPI {
 
     print("Country: " + weather.country);
     print("Temp: " + (weather.temperature).toString());
-   
 
   }
-  
 
 }
