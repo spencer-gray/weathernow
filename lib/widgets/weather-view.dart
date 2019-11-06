@@ -1,7 +1,6 @@
 import 'package:darksky_weather/darksky_weather_io.dart';
 import 'package:flutter/material.dart';
 import 'package:weather/weather.dart';
-import 'search.dart';
 import '../util/weather-parser.dart';
 import '../util/darksky.dart';
 //import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -38,7 +37,8 @@ class _WeatherViewState extends State<WeatherView> {
                 IconButton(
                   icon: Icon(Icons.search),
                   onPressed: () {
-                    showSearch(context: context, delegate: SearchData());
+                    print('search bar pressed ...');
+                    //showSearch(context: context, delegate: SearchData());
                   },
                 ),
               ],
