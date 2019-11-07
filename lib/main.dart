@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'widgets/google_search.dart';
 import 'widgets/weather-view.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 
 void main() => runApp(WeatherNow());

@@ -6,14 +6,14 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 class DarkSkyHandler {
 
   Forecast forecast;
-
+  String api;
   DarkSkyHandler({this.forecast});
 
   Future<Forecast> getCurrentForecast() async {
 
     var location = new Location();
-
     var currentLocation;
+
 
     try {
         currentLocation = await location.getLocation();
@@ -21,8 +21,11 @@ class DarkSkyHandler {
         currentLocation = null;
       }
 
-    var darksky = new DarkSkyWeather("72087ea62bfe7c9b995f9086566c05f8",
+    await DotEnv().load('.env');
+
+    var darksky = new DarkSkyWeather(DotEnv().env['DARKSKY_API'],
         language: Language.English, units: Units.SI);
+
     var forecast = await darksky.getForecast(currentLocation.latitude, currentLocation.longitude);
 
     return forecast;
