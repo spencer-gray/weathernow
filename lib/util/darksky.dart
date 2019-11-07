@@ -21,7 +21,7 @@ class DarkSkyHandler {
         currentLocation = null;
       }
 
-    var darksky = new DarkSkyWeather("DARK_SKY_API_KEY",
+    var darksky = new DarkSkyWeather("72087ea62bfe7c9b995f9086566c05f8",
         language: Language.English, units: Units.SI);
     var forecast = await darksky.getForecast(currentLocation.latitude, currentLocation.longitude);
 
