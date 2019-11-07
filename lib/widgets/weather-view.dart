@@ -1,6 +1,5 @@
 import 'package:darksky_weather/darksky_weather_io.dart';
 import 'package:flutter/material.dart';
-import 'search.dart';
 import 'package:weather/weather.dart';
 import '../util/weather-parser.dart';
 import '../util/darksky.dart';
@@ -38,7 +37,7 @@ class _WeatherViewState extends State<WeatherView> {
                 IconButton(
                   icon: Icon(Icons.search),
                   onPressed: () {
-                    showSearch(context: context, delegate: SearchData());
+                    _showSearchPage(context);
                   },
                 ),
               ],
@@ -233,18 +232,9 @@ class _WeatherViewState extends State<WeatherView> {
   }
 }
 
-Future<void> _showEventScheduler(BuildContext context) async {
-    /*
-    Navigator.push(
-      context,
-      MaterialPageRoute<ScheduledEvent>(builder: (context) {
-        return ScheduleEventPage(title: 'Schedule Event');
-      }),
-    ).then((ScheduledEvent event) {
-      print('Scheduling event:', event);
-    });
-    */
-    var event = await Navigator.pushNamed(context, '/scheduleEvent');
-    print('Scheduling event:');
+Future<void> _showSearchPage(BuildContext context) async {
+  
+    var event = await Navigator.pushNamed(context, '/searchPage');
+    print('search page:');
     print(event);
   }

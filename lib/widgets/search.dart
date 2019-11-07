@@ -1,3 +1,8 @@
+/* Currently unused class
+  will implement for search purposes later
+  -HT
+  */
+
 import 'package:flutter/material.dart';
 import 'package:weathernow/widgets/weather-view.dart';
 

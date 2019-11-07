@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'widgets/search.dart';
+import 'widgets/google_search.dart';
 import 'widgets/weather-view.dart';
 
 
@@ -17,7 +17,7 @@ class WeatherNow extends StatelessWidget {
       ),
       home: WeatherView(title: 'WeatherNow'),
       routes: <String, WidgetBuilder>{
-        '/scheduleEvent': (BuildContext context) {
+        '/searchPage': (BuildContext context) {
           return SearchPage();
         },
       },
