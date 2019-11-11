@@ -85,14 +85,13 @@ class _WeatherViewState extends State<WeatherView> {
                             children: <Widget>[
                               Column(
                                 children: <Widget>[
-                                  Text(weekdays[(DateTime.now().weekday)%7], style: TextStyle(fontSize: 11)),
-                                  Icon(Icons.wb_sunny),
+                                  Text(weekdays[(DateTime.fromMillisecondsSinceEpoch(snapshot.data.daily.data[0].time*1000).weekday)%7], style: TextStyle(fontSize: 11)),
+                                  Image.network('https://darksky.net/images/weather-icons/' + snapshot.data.daily.data[0].icon + '.png', width: 25, height: 25,),
                                   Row (
                                     children: <Widget>[
-                                      Text('12\xb0', style: TextStyle(fontSize: 11)),
-                                      //Text('10\xb0', style: TextStyle(fontSize: 11)),
+                                      Text(snapshot.data.daily.data[0].temperatureMax.round().toString(), style: TextStyle(fontSize: 11)),
                                       Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
-                                      Text('4\xb0', style: TextStyle(fontSize: 11)),
+                                      Text(snapshot.data.daily.data[0].temperatureMin.round().toString(), style: TextStyle(fontSize: 11)),
                                     ],
                                   ),
                                 ]
@@ -100,13 +99,13 @@ class _WeatherViewState extends State<WeatherView> {
                               Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
                               Column(
                                 children: <Widget>[
-                                  Text(weekdays[(DateTime.now().weekday+1)%7], style: TextStyle(fontSize: 11)),
-                                  Icon(Icons.wb_cloudy),
+                                  Text(weekdays[(DateTime.fromMillisecondsSinceEpoch(snapshot.data.daily.data[1].time*1000).weekday)%7], style: TextStyle(fontSize: 11)),
+                                  Image.network('https://darksky.net/images/weather-icons/' + snapshot.data.daily.data[1].icon + '.png', width: 25, height: 25,),
                                   Row (
                                     children: <Widget>[
-                                      Text('6\xb0', style: TextStyle(fontSize: 11)),
+                                      Text(snapshot.data.daily.data[1].temperatureMax.round().toString(), style: TextStyle(fontSize: 11)),
                                       Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
-                                      Text('2\xb0', style: TextStyle(fontSize: 11)),
+                                      Text(snapshot.data.daily.data[1].temperatureMin.round().toString(), style: TextStyle(fontSize: 11)),
                                     ],
                                   ),
                                 ]
@@ -114,13 +113,13 @@ class _WeatherViewState extends State<WeatherView> {
                               Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
                               Column(
                                 children: <Widget>[
-                                  Text(weekdays[(DateTime.now().weekday+2)%7], style: TextStyle(fontSize: 11)),
-                                  Icon(Icons.wb_sunny),
+                                  Text(weekdays[(DateTime.fromMillisecondsSinceEpoch(snapshot.data.daily.data[2].time*1000).weekday)%7], style: TextStyle(fontSize: 11)),
+                                  Image.network('https://darksky.net/images/weather-icons/' + snapshot.data.daily.data[2].icon + '.png', width: 25, height: 25,),
                                   Row (
                                     children: <Widget>[
-                                      Text('6\xb0', style: TextStyle(fontSize: 11)),
+                                      Text(snapshot.data.daily.data[2].temperatureMax.round().toString(), style: TextStyle(fontSize: 11)),
                                       Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
-                                      Text('4\xb0', style: TextStyle(fontSize: 11)),
+                                      Text(snapshot.data.daily.data[2].temperatureMin.round().toString(), style: TextStyle(fontSize: 11)),
                                     ],
                                   ),
                                 ]
@@ -128,13 +127,13 @@ class _WeatherViewState extends State<WeatherView> {
                               Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
                               Column(
                                 children: <Widget>[
-                                  Text(weekdays[(DateTime.now().weekday+3)%7], style: TextStyle(fontSize: 11)),
-                                  Icon(Icons.wb_cloudy),
+                                  Text(weekdays[(DateTime.fromMillisecondsSinceEpoch(snapshot.data.daily.data[3].time*1000).weekday)%7], style: TextStyle(fontSize: 11)),
+                                  Image.network('https://darksky.net/images/weather-icons/' + snapshot.data.daily.data[3].icon + '.png', width: 25, height: 25,),
                                   Row (
                                     children: <Widget>[
-                                      Text('7\xb0', style: TextStyle(fontSize: 11)),
+                                      Text(snapshot.data.daily.data[3].temperatureMax.round().toString(), style: TextStyle(fontSize: 11)),
                                       Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
-                                      Text('2\xb0', style: TextStyle(fontSize: 11)),
+                                      Text(snapshot.data.daily.data[3].temperatureMin.round().toString(), style: TextStyle(fontSize: 11)),
                                     ],
                                   ),
                                 ]
@@ -142,13 +141,13 @@ class _WeatherViewState extends State<WeatherView> {
                               Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
                               Column(
                                 children: <Widget>[
-                                  Text(weekdays[(DateTime.now().weekday+4)%7], style: TextStyle(fontSize: 11)),
-                                  Icon(Icons.wb_sunny),
+                                  Text(weekdays[(DateTime.fromMillisecondsSinceEpoch(snapshot.data.daily.data[4].time*1000).weekday)%7], style: TextStyle(fontSize: 11)),
+                                  Image.network('https://darksky.net/images/weather-icons/' + snapshot.data.daily.data[4].icon + '.png', width: 25, height: 25,),
                                   Row (
                                     children: <Widget>[
-                                      Text('12\xb0', style: TextStyle(fontSize: 11)),
+                                      Text(snapshot.data.daily.data[4].temperatureMax.round().toString(), style: TextStyle(fontSize: 11)),
                                       Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
-                                      Text('7\xb0', style: TextStyle(fontSize: 11)),
+                                      Text(snapshot.data.daily.data[4].temperatureMin.round().toString(), style: TextStyle(fontSize: 11)),
                                     ],
                                   ),
                                 ]
