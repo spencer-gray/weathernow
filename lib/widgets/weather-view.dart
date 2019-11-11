@@ -1,8 +1,8 @@
 import 'package:darksky_weather/darksky_weather_io.dart';
 import 'package:flutter/material.dart';
-import 'package:weather/weather.dart';
-import '../util/weather-parser.dart';
 import '../util/darksky.dart';
+import 'manage-cities.dart';
+import '../model/city.dart';
 //import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 
@@ -33,14 +33,6 @@ class _WeatherViewState extends State<WeatherView> {
             appBar: AppBar(
               title: Text("Mountain View, CA"),
               centerTitle: true,
-              actions: [
-                IconButton(
-                  icon: Icon(Icons.search),
-                  onPressed: () {
-                    _showSearchPage(context);
-                  },
-                ),
-              ],
             ),
 
             body: Container(
@@ -177,11 +169,7 @@ class _WeatherViewState extends State<WeatherView> {
                   ListTile(
                     leading: Icon(Icons.location_city),
                     title: Text('Manage Locations'),
-                    onTap: () {
-                      print("Manage locations pressed...");
-                      // below was causing errors in the app
-                      //showSearch(context: context, delegate: SearchData());
-                    }
+                    onTap: () => _manageCities(context),
                   ),
                   ListTile(
                     leading: Icon(Icons.map),
@@ -230,11 +218,26 @@ class _WeatherViewState extends State<WeatherView> {
 
     return forecast;
   }
+
+  Future<void> _manageCities(BuildContext context) async {
+    Navigator.pop(context);
+    
+    City result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => CityList()),
+    );
+
+    // NEEDS IMPLEMENTING: Opens detailed weather view of the list view item pressed.
+    if (result != null) {
+      print(result);
+    }
+  }
 }
 
-Future<void> _showSearchPage(BuildContext context) async {
+// No longer used
+// Future<void> _showSearchPage(BuildContext context) async {
   
-    var event = await Navigator.pushNamed(context, '/searchPage');
-    print('search page:');
-    print(event);
-  }
+//     var event = await Navigator.pushNamed(context, '/searchPage');
+//     print('search page:');
+//     print(event);
+//   }

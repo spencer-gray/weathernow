@@ -11,7 +11,7 @@ class DBUtils {
         if (version > 1) {
           // downgrade path
         }
-        db.execute('CREATE TABLE citiesdb(id INTEGER PRIMARY KEY, sid TEXT, grade TEXT)');
+        db.execute('CREATE TABLE citiesdb(id INTEGER PRIMARY KEY, name TEXT, latitude TEXT, longitude TEXT)');
       },
       version: 1,
     );
