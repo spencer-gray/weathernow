@@ -1,7 +1,9 @@
 import 'package:darksky_weather/darksky_weather_io.dart';
 import 'package:flutter/material.dart';
+import 'package:weathernow/widgets/settings.dart';
 import '../util/darksky.dart';
 import 'manage-cities.dart';
+import 'weather_map.dart';
 import '../model/city.dart';
 //import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -172,9 +174,10 @@ class _WeatherViewState extends State<WeatherView> {
                   ),
                   ListTile(
                     leading: Icon(Icons.map),
-                    title: Text('Item 2'),
+                    title: Text('Map'),
                     onTap: () {
-                      print("Item 2 pressed...");
+                      Navigator.of(context).pop();
+                      _mapPage(context);
                     }
                   ),
                   ListTile(
@@ -182,6 +185,8 @@ class _WeatherViewState extends State<WeatherView> {
                     title: Text('Settings'),
                     onTap: () {
                       print("Settings pressed...");
+                      Navigator.of(context).pop();
+                      _settingsPage(context);
                     }
                   ),
                   ListTile(
@@ -231,6 +236,31 @@ class _WeatherViewState extends State<WeatherView> {
       print(result);
     }
   }
+
+  Future<void> _settingsPage(BuildContext context) async{
+    
+    var event = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SettingsPage(
+          title: "Settings Page",
+        ),
+      ),
+    );
+    
+  }
+
+  Future<void> _mapPage(BuildContext context) async{
+    var event = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MapPage(
+          title: "Map Page",
+        ),
+      ),
+    );
+  }
+
 }
 
 // No longer used
