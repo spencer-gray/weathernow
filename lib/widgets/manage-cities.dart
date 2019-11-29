@@ -166,7 +166,29 @@ class _CityListState extends State<CityList> {
               trailing:  IconButton(
                 icon: Icon(Icons.delete),
                 onPressed: () {
-                  _deleteCity(city.id);
+                  return showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return SimpleDialog(
+                      title: Text("Delete location?"),
+                      children: <Widget>[
+                        SimpleDialogOption(
+                          child: const Text('Yes'),
+                          onPressed: () { 
+                            _deleteCity(city.id);
+                            Navigator.pop(context);
+                          }
+                        ),
+                        SimpleDialogOption(
+                          child: const Text('No'),
+                          onPressed: () { 
+                            Navigator.pop(context); }
+                        ),
+                        
+                      ],
+                    );
+                    }
+                  );
                 }
               ),
               onTap: () {
