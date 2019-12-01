@@ -29,6 +29,9 @@ dependencies:
   latlong:
   flutter_map: ^0.7.3
   geolocator: '^5.1.1'
+  firebase_storage: 
+  image_picker: 
+  charts_flutter: ^0.8.1
 
 
   # The following adds the Cupertino Icons font to your application.

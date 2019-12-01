@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "974478002212",
+    "firebase_url": "https://weathernow-ee7c1.firebaseio.com",
+    "project_id": "weathernow-ee7c1",
+    "storage_bucket": "weathernow-ee7c1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:974478002212:android:4c262d9d431aa100d870b1",
+        "android_client_info": {
+          "package_name": "com.example.weathernow"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "974478002212-1b13sqahhtd1n55p0b88i0din0aup0pc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.weathernow",
+            "certificate_hash": "4f1db7ece03d1abb62058dc256e4c81e137f6600"
+          }
+        },
+        {
+          "client_id": "974478002212-q0pqmud6de28lnf5061gf7ifktscl6nq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqCGTom4f632bespY1wWStMWjNeod_FzM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "974478002212-q0pqmud6de28lnf5061gf7ifktscl6nq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
