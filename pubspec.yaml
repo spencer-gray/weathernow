@@ -30,6 +30,7 @@ dependencies:
   flutter_map: ^0.7.3
   geolocator: '^5.1.1'
   firebase_storage: 
+  cloud_firestore:
   image_picker: 
   charts_flutter: ^0.8.1
 

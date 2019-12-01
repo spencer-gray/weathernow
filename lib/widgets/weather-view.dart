@@ -1,7 +1,7 @@
 import 'package:darksky_weather/darksky_weather_io.dart';
 import 'package:flutter/material.dart';
-//import 'package:weathernow/widgets/community_photos.dart';
-//import 'package:weathernow/widgets/photo_upload.dart';
+import 'package:weathernow/widgets/community_photos.dart';
+import 'package:weathernow/widgets/photo_upload.dart';
 import 'package:weathernow/widgets/settings.dart';
 import '../util/darksky.dart';
 import 'manage-cities.dart';
@@ -238,7 +238,7 @@ class _WeatherViewState extends State<WeatherView> {
                         ]),
                         DataRow(cells: [
                           DataCell(Text('Precipitation\nType', style: TextStyle(fontSize: 11))),
-                          DataCell(Text(snapshot.data.currently.precipType, style: TextStyle(fontSize: 11)))
+                          DataCell(Text(snapshot.data.currently.precipType.toString(), style: TextStyle(fontSize: 11)))
                         ]),
                         DataRow(cells: [
                           DataCell(Text('Ozone', style: TextStyle(fontSize: 11))),
@@ -284,9 +284,9 @@ class _WeatherViewState extends State<WeatherView> {
                    ListTile(
                     leading: Icon(Icons.photo),
                     title: Text('Community Photos'),
-                    onTap: () => {},
+                    //onTap: () => {},
                     // (WORK IN PROGRESS)
-                    //onTap: () => _communityPhotosPage(context),
+                    onTap: () => _communityPhotosPage(context),
                   ),
                   ListTile(
                     leading: Icon(Icons.settings),
@@ -370,18 +370,18 @@ class _WeatherViewState extends State<WeatherView> {
   }
 
   // (WORK IN PROGRESS) opens the community photos page
-  // Future<void> _communityPhotosPage(BuildContext context) async {
-  //   Navigator.pop(context);
+  Future<void> _communityPhotosPage(BuildContext context) async {
+    Navigator.pop(context);
     
-  //   City result = await Navigator.push(
-  //     context,
-  //     MaterialPageRoute(builder: (context) => ProfilePage()),
-  //   );
+    City result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => CommunityPhotos()),
+    );
 
-  //   if (result != null) {
-  //     print(result);
-  //   }
-  // }
+    if (result != null) {
+      print(result);
+    }
+  }
 
 }
 
