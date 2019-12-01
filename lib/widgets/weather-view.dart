@@ -62,7 +62,7 @@ class _WeatherViewState extends State<WeatherView> {
               centerTitle: true,
             ),
             body: ListView(
-              padding: EdgeInsets.symmetric(vertical: 100),
+              padding: EdgeInsets.only(top: 100),
               children: <Widget> [ 
                 Column(
                   children: <Widget> [
@@ -71,7 +71,7 @@ class _WeatherViewState extends State<WeatherView> {
                       children: <Widget> [
                         Container(
                           // need to handle substring size when temp is single vs. double digit
-                          child: Text(snapshot.data.currently.temperature.toString().substring(0, 3) + '\xb0', style: TextStyle(fontSize: 50))
+                          child: Text(snapshot.data.currently.temperature.toString() + '\xb0C', style: TextStyle(fontSize: 50))
                         ),
                         Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
                         Column(
@@ -100,7 +100,7 @@ class _WeatherViewState extends State<WeatherView> {
                     ),
 
                     // 5 day forecast box
-                    Padding(padding: EdgeInsets.symmetric(vertical: 20)),
+                    Padding(padding: EdgeInsets.symmetric(vertical: 40)),
                     Container(
                       margin: EdgeInsets.all(10),
                       padding: EdgeInsets.all(10),
@@ -211,7 +211,54 @@ class _WeatherViewState extends State<WeatherView> {
                           ]
                         )
                       )
-                    )
+                    ),
+
+                    // Current weather data table
+                    Padding(padding: EdgeInsets.symmetric(vertical: 10)),
+                    DataTable(
+                      dataRowHeight: 30,
+                      headingRowHeight: 0,
+                      columns: [
+                        DataColumn(label: Text(' ')),
+                        DataColumn(label: Text(' '))
+                      ],
+                      rows: [
+                        DataRow(
+                          cells: [
+                          DataCell(Text('Wind Speed', style: TextStyle(fontSize: 11))),
+                          DataCell(Text((snapshot.data.currently.windSpeed*1.60934).toStringAsFixed(2) + " km/h", style: TextStyle(fontSize: 11)))
+                        ]),
+                        DataRow(cells: [
+                          DataCell(Text('Cloud Cover', style: TextStyle(fontSize: 11))),
+                          DataCell(Text((snapshot.data.currently.cloudCover*100).round().toString() + '%', style: TextStyle(fontSize: 11)))
+                        ]),
+                        DataRow(cells: [
+                          DataCell(Text('Precipitation', style: TextStyle(fontSize: 11))),
+                          DataCell(Text((snapshot.data.currently.humidity*100).round().toString() + '%', style: TextStyle(fontSize: 11)))
+                        ]),
+                        DataRow(cells: [
+                          DataCell(Text('Precipitation\nType', style: TextStyle(fontSize: 11))),
+                          DataCell(Text(snapshot.data.currently.precipType, style: TextStyle(fontSize: 11)))
+                        ]),
+                        DataRow(cells: [
+                          DataCell(Text('Ozone', style: TextStyle(fontSize: 11))),
+                          DataCell(Text(snapshot.data.currently.ozone.toString() + 'DU', style: TextStyle(fontSize: 11)))
+                        ]),
+                        DataRow(cells: [
+                          DataCell(Text('Dew Point', style: TextStyle(fontSize: 11))),
+                          DataCell(Text(snapshot.data.currently.dewPoint.toString() + '\xb0C', style: TextStyle(fontSize: 11)))
+                        ]),
+                        DataRow(cells: [
+                          DataCell(Text('Visibility', style: TextStyle(fontSize: 11))),
+                          DataCell(Text(snapshot.data.currently.visibility.toString().substring(0, 4), style: TextStyle(fontSize: 11)))
+                        ]),
+                        DataRow(cells: [
+                          DataCell(Text('Pressure', style: TextStyle(fontSize: 11))),
+                          DataCell(Text(snapshot.data.currently.pressure.round().toString() + ' mbar', style: TextStyle(fontSize: 11)))
+                        ]),
+                      ]
+                    ),
+                    Padding(padding: EdgeInsets.symmetric(vertical: 30)),
                   ]
                 )
               ]
