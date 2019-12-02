@@ -11,6 +11,9 @@ import 'package:weathernow/widgets/reminder.dart';
 //import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:weathernow/model/weekdayForecast.dart';
+import '../util/app_localizations.dart';
+import 'dart:ui' as ui;
+
 
 
 class WeatherView extends StatefulWidget {
@@ -291,9 +294,11 @@ class _WeatherViewState extends State<WeatherView> {
                   ),
                   ListTile(
                     leading: Icon(Icons.calendar_today),
-                    title: Text('Add Reminder'),
+                    title: Text(AppLocalizations.of(context).translate('Reminders')),
                     onTap: () {
+                      Locale myLocale = Locale(ui.window.locale.languageCode);
                       print("Reminders pressed...");
+                      print(myLocale);
                       Navigator.of(context).pop();
                       _reminderPage(context);
                     }
@@ -302,7 +307,7 @@ class _WeatherViewState extends State<WeatherView> {
                     leading: Icon(Icons.settings),
                     title: Text('Settings'),
                     onTap: () {
-                      print("Settings pressed...");
+                      print("Settings pressed...");                      
                       Navigator.of(context).pop();
                       _settingsPage(context);
                     }
@@ -360,7 +365,8 @@ class _WeatherViewState extends State<WeatherView> {
       context,
       MaterialPageRoute(
         builder: (context) => ReminderPage(
-          title: "Add Reminder",
+          title: AppLocalizations.of(context).translate('Reminders'),
+          
         ),
       ),
     );

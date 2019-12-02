@@ -126,9 +126,9 @@ class _ReminderPageState extends State<ReminderPage> {
     var when = DateTime.now().add(Duration(minutes: int.parse(time)));
     // print(when);
     if (int.parse(time) == 1) {
-      await _notifications.sendNotificationLater('Reminder made ' + time + ' minute ago', note, when, 'payload');
+      await _notifications.sendNotificationLater('Reminder made ' + time + ' minute ago: ', note, when, 'payload');
     } else {
-      await _notifications.sendNotificationLater('Reminder made ' + time + ' minutes ago', note, when, 'payload');
+      await _notifications.sendNotificationLater('Reminder (' + time + ' minutes ago): ', note, when, 'payload');
     }
     
   }
@@ -143,6 +143,9 @@ class _ReminderPageState extends State<ReminderPage> {
       pendingString = pendingString + '${pendingRequest.title}' + '\n\t\t${pendingRequest.body}\n';
 
     }
+    if(pendingString == '') {
+      pendingString = 'You have no upcoming reminders!';
+    }
 
     showDialog<void>(
       barrierDismissible: true, 
@@ -150,7 +153,9 @@ class _ReminderPageState extends State<ReminderPage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Your Upcoming Reminders'),
-          content: Text(pendingString),
+          content: Text(
+            pendingString, 
+            style: TextStyle(fontStyle: FontStyle.italic),),
           actions: <Widget>[
             FlatButton(
               child: Text('Close'),
