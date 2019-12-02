@@ -9,11 +9,11 @@ class DarkSkyHandler {
   String api;
   DarkSkyHandler({this.forecast});
 
+  // finds current locations forecast data
   Future<Forecast> getCurrentForecast() async {
 
     var location = new Location();
     var currentLocation;
-
 
     try {
         currentLocation = await location.getLocation();
@@ -30,6 +30,20 @@ class DarkSkyHandler {
 
     return forecast;
     
+  }
+
+  // Pass in latitude and longitude and finds forecast data
+  Future<Forecast> getSpecifiedForecast(double lat, double long) async {
+    
+    await DotEnv().load('.env');
+
+    var darksky = new DarkSkyWeather(DotEnv().env['DARKSKY_API'],
+        language: Language.English, units: Units.SI);
+
+    var forecast = await darksky.getForecast(lat, long);
+
+    return forecast;
+
   }
 
 }

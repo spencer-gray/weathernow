@@ -36,6 +36,7 @@ dependencies:
   image_picker: 
   charts_flutter: ^0.8.1
   flutter_local_notifications: 
+  geocoder: ^0.2.1
 
 
   # The following adds the Cupertino Icons font to your application.

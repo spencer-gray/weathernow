@@ -1,5 +1,9 @@
 import 'package:darksky_weather/darksky_weather_io.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoder/geocoder.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:latlong/latlong.dart';
+import 'package:location/location.dart';
 import 'package:weathernow/widgets/community_photos.dart';
 import 'package:weathernow/widgets/photo_upload.dart';
 import 'package:weathernow/widgets/settings.dart';
@@ -28,19 +32,48 @@ class WeatherView extends StatefulWidget {
 class _WeatherViewState extends State<WeatherView> {
 
   List<String> weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  LatLng latlong;
+  Future<Forecast> forecast;
+  bool currentLocCheck = true;
+  String locationTitle = " ";
+
+  Future<LatLng> findCurrentLocation() async {
+    var location = new Location();
+    LocationData currentLocation;
+
+    try {
+        await location.getLocation().then((result) {
+          currentLocation = result;
+        });
+      } catch (e) {
+        currentLocation = null;
+      }
+    return LatLng(currentLocation.latitude, currentLocation.longitude);
+  }
 
   @override
   Widget build(BuildContext context) {
     _loadForecasts();
 
+    if (currentLocCheck) {
+      findCurrentLocation().then((result) {
+        latlong = result;
+      });
+      forecast = _loadForecasts();
+    }
+
     return FutureBuilder(
-      future: _loadForecasts(),
+      future: forecast,
       initialData: Forecast,
       builder: (context, snapshot) { 
 
         if (snapshot.connectionState == ConnectionState.done) {
-          // store the weekday data here by passing the snapshot and taking data from it in weekDayForecast
-          //print('hi');
+          
+          if (locationTitle == " ") {
+            _findCityName(snapshot.data.latitude, snapshot.data.longitude);
+          }
+
+
           // initializing weekday data to be displayed in chart
           List<WeekdayForecast> _weekdayData = [
             WeekdayForecast(weekday: weekdays[(DateTime.fromMillisecondsSinceEpoch(snapshot.data.daily.data[0].time*1000).weekday)%7],
@@ -62,7 +95,8 @@ class _WeatherViewState extends State<WeatherView> {
 
           return Scaffold(
             appBar: AppBar(
-              title: Text("Mountain View, CA"),
+              title: Text(locationTitle),
+              //title: Text("Mountain View, CA"),
               centerTitle: true,
             ),
             body: ListView(
@@ -326,16 +360,26 @@ class _WeatherViewState extends State<WeatherView> {
           );
         }
 
-        // Temp Placeholder
-        // Loading indication when first starting up the app
-        // Should add some styling
         else {       
-          return CircularProgressIndicator();
+          return LinearProgressIndicator();
         }
       }
 
     );
-    
+  }
+
+  // finds location 
+  Future<void> _findCityName(double lat, double long) async{
+    var address = await Geocoder.local.findAddressesFromCoordinates(Coordinates(lat, long));
+    locationTitle = address.first.subAdminArea + ", " + address.first.adminArea;
+    setState(() {});
+  }
+
+
+  Future<Forecast> _loadSpecifiedForecasts(LatLng loc) async {
+    DarkSkyHandler handler = new DarkSkyHandler();
+    Forecast forecast = await handler.getSpecifiedForecast(loc.latitude, loc.longitude);
+    return forecast;
   }
 
   // Loads the forecast data
