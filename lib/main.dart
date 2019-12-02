@@ -3,6 +3,7 @@ import 'package:weathernow/widgets/settings.dart';
 import 'widgets/google_search.dart';
 import 'widgets/weather-view.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
+import 'package:weathernow/widgets/reminder.dart';
 
 
 void main() => runApp(WeatherNow());
@@ -33,6 +34,9 @@ class WeatherNow extends StatelessWidget {
             },
             '/mapPage': (BuildContext context){
               return SettingsPage();
+            },
+            '/reminderPage': (BuildContext context){
+              return ReminderPage();
             },
           },
           debugShowCheckedModeBanner: false

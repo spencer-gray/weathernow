@@ -60,22 +60,6 @@ class _SearchPageState extends State<SearchPage> {
       
       
     ),
-      // body: Container(
-      //   margin: const EdgeInsets.only(top: 30.0),
-      //   alignment: Alignment.topCenter,
-      //   child: RaisedButton(
-      //     onPressed: () async {
-      //       // autocomplete and predict
-      //       Prediction p = await PlacesAutocomplete.show(context: context, apiKey: googleKey, mode: Mode.overlay,);
-      //       displayPrediction(p);
-      //     },
-      //     //new address ability
-      //     child: Text('Find x address'),
-      //     //need to add way to store previous addresses here
-
-      //   )
-        
-      // )
     );
   }
 

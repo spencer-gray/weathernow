@@ -65,7 +65,7 @@ class _CityListState extends State<CityList> {
       );
   }
 
-  // READS data from SQL DB into List<Grade> grade variable
+  // READS data from SQL DB into List<City> city variable
   // to be used by ListView
   Future<List<City>> _loadData() async{
     final db = await DBUtils.init();
@@ -80,7 +80,7 @@ class _CityListState extends State<CityList> {
     return cities;
   }
 
-  // Opens GradeForm page and adds non null entries to DB
+  // Opens CityForm page and adds non null entries to DB
   Future<void> _addCity() async {
     print("Add City pressed");
 

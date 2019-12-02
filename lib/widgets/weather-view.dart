@@ -7,6 +7,7 @@ import '../util/darksky.dart';
 import 'manage-cities.dart';
 import 'weather_map.dart';
 import '../model/city.dart';
+import 'package:weathernow/widgets/reminder.dart';
 //import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:weathernow/model/weekdayForecast.dart';
@@ -289,6 +290,15 @@ class _WeatherViewState extends State<WeatherView> {
                     onTap: () => _communityPhotosPage(context),
                   ),
                   ListTile(
+                    leading: Icon(Icons.calendar_today),
+                    title: Text('Add Reminder'),
+                    onTap: () {
+                      print("Reminders pressed...");
+                      Navigator.of(context).pop();
+                      _reminderPage(context);
+                    }
+                  ),
+                  ListTile(
                     leading: Icon(Icons.settings),
                     title: Text('Settings'),
                     onTap: () {
@@ -343,6 +353,17 @@ class _WeatherViewState extends State<WeatherView> {
     if (result != null) {
       print(result);
     }
+  }
+
+  Future<void> _reminderPage(BuildContext context) async{
+    var event = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ReminderPage(
+          title: "Add Reminder",
+        ),
+      ),
+    );
   }
 
   Future<void> _settingsPage(BuildContext context) async{
