@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:latlong/latlong.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+//import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:async';
 
 class MapPage extends StatefulWidget{
@@ -86,7 +86,7 @@ class _MapPageState extends State<MapPage>{
             ),
           );
         }else{
-          return CircularProgressIndicator();
+          return LinearProgressIndicator();
         }
       },
     );
@@ -103,8 +103,8 @@ class _MapPageState extends State<MapPage>{
   }
 
   Future<String> _getAPI() async{
-    await DotEnv().load('.env');
-    return DotEnv().env["MAPBOX_API"];
+    //await DotEnv().load('.env');
+    return "pk.eyJ1IjoiamltbXlqb2U2NyIsImEiOiJjazJ3ZW55MjgwMTU4M2JvbTd1MzRybDNmIn0.AE0eYpvn456vVKXO8EUQ3Q";
   }
 
 }

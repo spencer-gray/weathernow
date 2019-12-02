@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:google_maps_webservice/places.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+//import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 
 class SearchPage extends StatefulWidget {
@@ -17,9 +17,9 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   void initState() {
-    DotEnv().load('.env');
+    //DotEnv().load('.env');
 
-    this.googleKey = DotEnv().env['GOOGLE_API'];
+    this.googleKey = 'AIzaSyAjNnwNrnkC3HbvSOdfNF34ALGe7iJaU90';
     this._places = GoogleMapsPlaces(apiKey: googleKey);
 
     super.initState();

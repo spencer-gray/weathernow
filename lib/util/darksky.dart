@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:darksky_weather/darksky_weather_io.dart';
 import 'package:location/location.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+//import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class DarkSkyHandler {
 
@@ -21,9 +21,9 @@ class DarkSkyHandler {
         currentLocation = null;
       }
 
-    await DotEnv().load('.env');
+    //await DotEnv().load('.env');
 
-    var darksky = new DarkSkyWeather(DotEnv().env['DARKSKY_API'],
+    var darksky = new DarkSkyWeather('72087ea62bfe7c9b995f9086566c05f8',
         language: Language.English, units: Units.SI);
 
     var forecast = await darksky.getForecast(currentLocation.latitude, currentLocation.longitude);
@@ -35,9 +35,9 @@ class DarkSkyHandler {
   // Pass in latitude and longitude and finds forecast data
   Future<Forecast> getSpecifiedForecast(double lat, double long) async {
     
-    await DotEnv().load('.env');
+    //await DotEnv().load('.env');
 
-    var darksky = new DarkSkyWeather(DotEnv().env['DARKSKY_API'],
+    var darksky = new DarkSkyWeather('72087ea62bfe7c9b995f9086566c05f8',
         language: Language.English, units: Units.SI);
 
     var forecast = await darksky.getForecast(lat, long);
