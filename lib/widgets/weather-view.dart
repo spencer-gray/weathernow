@@ -371,7 +371,7 @@ class _WeatherViewState extends State<WeatherView> {
   // finds location 
   Future<void> _findCityName(double lat, double long) async{
     var address = await Geocoder.local.findAddressesFromCoordinates(Coordinates(lat, long));
-    locationTitle = address.first.locality + ", " + address.first.adminArea;
+    locationTitle = address.first.subAdminArea + ", " + address.first.adminArea;
     setState(() {});
   }
 
