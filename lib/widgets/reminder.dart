@@ -126,7 +126,7 @@ class _ReminderPageState extends State<ReminderPage> {
     var when = DateTime.now().add(Duration(minutes: int.parse(time)));
     // print(when);
     if (int.parse(time) == 1) {
-      await _notifications.sendNotificationLater('Reminder made ' + time + ' minute ago: ', note, when, 'payload');
+      await _notifications.sendNotificationLater('Reminder (' + time + ' minute ago): ', note, when, 'payload');
     } else {
       await _notifications.sendNotificationLater('Reminder (' + time + ' minutes ago): ', note, when, 'payload');
     }

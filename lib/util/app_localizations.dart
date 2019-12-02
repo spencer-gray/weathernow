@@ -50,7 +50,7 @@ class _AppLocalizationsDelegate
 
   @override
   Future<AppLocalizations> load(Locale locale) async {
-    // SON loading actually runs here
+    // JSON loading actually runs here
     AppLocalizations localizations = new AppLocalizations(locale);
     await localizations.load();
     return localizations;
