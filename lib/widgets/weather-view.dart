@@ -1,5 +1,6 @@
-import 'package:darksky_weather/darksky_weather_io.dart';
 import 'package:flutter/material.dart';
+import 'dart:ui' as ui;
+import 'package:darksky_weather/darksky_weather_io.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong/latlong.dart';
@@ -16,7 +17,7 @@ import 'package:weathernow/widgets/reminder.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:weathernow/model/weekdayForecast.dart';
 import '../util/app_localizations.dart';
-import 'dart:ui' as ui;
+
 
 
 
