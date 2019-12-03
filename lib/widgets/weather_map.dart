@@ -6,6 +6,8 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:async';
+import 'package:flutter_google_places/flutter_google_places.dart';
+import 'package:google_maps_webservice/places.dart';
 
 class MapPage extends StatefulWidget{
 
@@ -21,15 +23,28 @@ class _MapPageState extends State<MapPage>{
 
   var _geoLocator = Geolocator();
   LatLng centre;
-  bool first = true;
+  List<Placemark> _places;
+  String googleKey;
+  GoogleMapsPlaces _mapsPlaces;
+
+
+  @override
+  void initState(){
+    _getCurrentLocation();
+    
+    DotEnv().load('.env');
+
+    this.googleKey = DotEnv().env['GOOGLE_API'];
+    this._mapsPlaces = GoogleMapsPlaces(apiKey: googleKey);
+
+    super.initState();
+    /*_geoLocator.getPositionStream(LocationOptions(accuracy: LocationAccuracy.best, timeInterval: 10000)).listen((userLocation){
+      _updateLocaiton(userLocation);
+    });*/
+  }
 
   @override
   Widget build(BuildContext context){
-
-    if(first){
-      _getCurrentLocation();
-      first = false;
-    }
     
     return FutureBuilder(
       future: _getAPI(),
@@ -38,11 +53,30 @@ class _MapPageState extends State<MapPage>{
           return Scaffold(
             appBar: AppBar(
               title: Text(widget.title),
+              actions: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.search),
+                  color: Colors.blue,
+                  onPressed: () {
+                    searchCities();
+                  },
+                  tooltip: 'New Location',
+                ),
+                IconButton(
+                  icon: Icon(Icons.my_location),
+                  color: Colors.blue,
+                  onPressed: () {
+                    _getCurrentLocation();
+                  },
+                  tooltip: 'Current User Location',
+                ),
+              ],
             ),
             body: FlutterMap(
               options: MapOptions(
                 center: centre,
-                minZoom: 16.0,
+                minZoom: 1.0,
+                maxZoom: 20.0,
               ),
               layers: [
                 TileLayerOptions(
@@ -60,13 +94,17 @@ class _MapPageState extends State<MapPage>{
                       width: 45.0,
                       height: 45.0,
                       point: centre,
+                      
                       builder: (context) => Container(
                         child: IconButton(
                           icon: Icon(Icons.location_on),
                           color: Colors.blue,
                           iconSize: 45.0,
                           onPressed: () {
-                            print('Icon clicked');
+                            SnackBar snackbar = SnackBar(
+                              content: Text("${_places[0].locality}, ${_places[0].administrativeArea}"),
+                            );
+                            Scaffold.of(context).showSnackBar(snackbar);
                           },
                         ),
                       ),
@@ -86,7 +124,7 @@ class _MapPageState extends State<MapPage>{
             ),
           );
         }else{
-          return CircularProgressIndicator();
+          return LinearProgressIndicator();
         }
       },
     );
@@ -96,11 +134,37 @@ class _MapPageState extends State<MapPage>{
     _geoLocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.best,
     ).then((Position location) {
-      setState(() {
-        centre = LatLng(location.latitude, location.longitude);
+      _setInfo(location.latitude, location.longitude);
+    });
+  }
+
+  void _setInfo(double lat, double long){
+    setState(() {
+      centre = LatLng(lat, long);
+      _geoLocator.placemarkFromCoordinates(lat, long).then((List<Placemark> p){
+        _places = p;
       });
     });
   }
+
+  Future searchCities() async{
+    Prediction p = await PlacesAutocomplete.show(context: context, apiKey: googleKey, mode: Mode.overlay,);
+    print(p);
+    if(p != null){
+      PlacesDetailsResponse detail = await _mapsPlaces.getDetailsByPlaceId(p.placeId);
+      _setInfo(
+        detail.result.geometry.location.lat,
+        detail.result.geometry.location.lng,
+      );   
+    }
+  }
+
+  /*void _updateLocaiton(Position userLocation){
+    centre = LatLng(userLocation.latitude, userLocation.longitude);
+    _geoLocator.placemarkFromPosition(userLocation).then((List<Placemark> places){
+
+    });
+  }*/
 
   Future<String> _getAPI() async{
     await DotEnv().load('.env');
