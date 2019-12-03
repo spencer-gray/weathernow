@@ -167,8 +167,8 @@ class _MapPageState extends State<MapPage>{
   }*/
 
   Future<String> _getAPI() async{
-    await DotEnv().load('.env');
-    return DotEnv().env["MAPBOX_API"];
+    //await DotEnv().load('.env');
+    return "pk.eyJ1IjoiamltbXlqb2U2NyIsImEiOiJjazJ3ZW55MjgwMTU4M2JvbTd1MzRybDNmIn0.AE0eYpvn456vVKXO8EUQ3Q";
   }
 
 }

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import '../util/notifications.dart';
 
-
-class ReminderPage extends StatefulWidget{
-
+class ReminderPage extends StatefulWidget {
   ReminderPage({Key key, this.title}) : super(key: key);
 
   final String title;
@@ -15,95 +13,152 @@ class ReminderPage extends StatefulWidget{
 class _ReminderPageState extends State<ReminderPage> {
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-
+  DateTime _eventDate = DateTime.now();
 
   var _notifications = Notifications();
 
   @override
   Widget build(BuildContext context) {
+    // init notification
     _notifications.init();
-    var timeController = TextEditingController();
+    // declare currrent date
+    DateTime now = DateTime.now();
+
+    //keep track of note
     var noteController = TextEditingController();
 
-  //   @override
-  // void dispose() {
-  //   // Clean up the controller when the widget is disposed.
-  //   timeController.dispose();
-  //   noteController.dispose();
-  //   super.dispose();
-  // }
-
     return Scaffold(
+      // key for snackbar integration
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text(widget.title),
-        actions: <Widget>[        
-        ],
       ),
       body: new Form(
+        // key to track form
         key: _formKey,
         child: Column(
-          
           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.only(top: 10, bottom: 20),
-              child: TextFormField(
-                controller: timeController,
-                decoration: InputDecoration(
-                  hintText: "Time in Minutes (example: 35)",
-                  icon: Icon(Icons.access_time)
+              padding: EdgeInsets.only(left: 15, top: 10, bottom: 20),
+              child: Row(children: [
+                // button for picking date
+                RaisedButton(
+                  child: Text('Select Date'),
+                  textColor: Colors.white,
+                  color: Colors.grey,
+                  onPressed: () {
+                    showDatePicker(
+                      context: context,
+                      firstDate: now,
+                      lastDate: DateTime(2100),
+                      initialDate: now,
+                    ).then((value) {
+                      setState(() {
+                        _eventDate = DateTime(
+                          value.year,
+                          value.month,
+                          value.day,
+                          _eventDate.hour,
+                          _eventDate.minute,
+                          _eventDate.second,
+                        );
+                      });
+                    });
+                  },
                 ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Text(_toDateString(_eventDate)),
+                ),
+              ]),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 15, bottom: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  RaisedButton(
+                    child: Text('Select Time'),
+                    textColor: Colors.white,
+                    color: Colors.grey,
+                    onPressed: () {
+                      showTimePicker(
+                        context: context,
+                        initialTime: TimeOfDay(
+                          hour: now.hour,
+                          minute: now.minute,
+                        ),
+                      ).then((value) {
+                        setState(() {
+                          _eventDate = DateTime(
+                            _eventDate.year,
+                            _eventDate.month,
+                            _eventDate.day,
+                            value.hour,
+                            value.minute,
+                          );
+                        });
+                      });
+                    },
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: Text(_toTimeString(_eventDate)),
+                  ),
+                ],
+              ),
+            ),
+            // textfield to update note
+            Padding(
+              padding: EdgeInsets.only(top: 5, left: 15),
+              child: TextFormField(
+                controller: noteController,
+                decoration: InputDecoration(
+                    hintText: "''Wear a jacket to dinner''",
+                    icon: Icon(Icons.create)),
                 onSaved: (String value) {
-                  print('Saving time $value');
-                  timeController.text = value;
+                  print('Saving note $value');
+                  noteController.text = value;
                 },
                 validator: (String value) {
                   print('Validating $value');
                   if (value.length == 0) {
-                    return 'Invalid time';
+                    return 'Invalid note';
                   } else {
                     return null;
                   }
                 },
               ),
             ),
-            TextFormField(
-              controller: noteController,
-              decoration: InputDecoration(
-                hintText: "''Wear a jacket to dinner''",
-                icon: Icon(Icons.create)
-              ),
-              onSaved: (String value) {
-                  print('Saving note $value');
-                  noteController.text = value;
-              },
-              validator: (String value) {
-                print('Validating $value');
-                if (value.length == 0) {
-                  return 'Invalid note';
-                } else {
-                  return null;
-                }
-              },
-            ),
+            // button to create reminder
             Padding(
               padding: EdgeInsets.only(top: 20),
               child: FlatButton.icon(
-                icon: Icon(Icons.add_alarm),
-                label: Text('Add New Reminder'),
-                onPressed: () { 
-                    _displaySnackBar(context);
-                    _notificationLater(noteController.text, timeController.text);
-                }
+                  icon: Icon(Icons.add_alarm),
+                  label: Text('Add New Reminder'),
+                  onPressed: () {
+                    print(_eventDate.toString());
+                    if (_toDateInt(_eventDate) > _toDateInt(now)) {
+                      _displaySnackBar(context, 'Creating notification...');
+                      _notificationLater(noteController.text, _eventDate);
+                    } else if (_toTimeInt(_eventDate) < _toTimeInt(now)) {
+                      _displaySnackBar(context,
+                          'Invalid time input, must select a time later than current!');
+                    } else {
+                      _displaySnackBar(context, 'Creating notification...');
+                      _notificationLater(noteController.text, _eventDate);
+                    }
+                  }),
+            ),
+            // button to see any pending reminders
+            Expanded(
+              child: FlatButton.icon(
+                label: Text('See Upcoming Reminders'),
+                icon: Icon(Icons.list),
+                onPressed: _showPendingNotifications,
               ),
             ),
-
-            FlatButton.icon(
-              label: Text('See Upcoming Reminders'),
-              icon: Icon(Icons.list),
-              onPressed: _showPendingNotifications,
-            ),  
           ],
         ),
       ),
@@ -114,48 +169,55 @@ class _ReminderPageState extends State<ReminderPage> {
   //   _notifications.sendNotificationNow('title', 'body', 'payload');
   // }
 
-    _displaySnackBar(BuildContext context) {
-      if (_formKey.currentState.validate()) {
-                    _scaffoldKey.currentState.showSnackBar(SnackBar(
-                      content: Text('Creating notification...'),
-                    ));  
-      }
+  _displaySnackBar(BuildContext context, String s) {
+    if (_formKey.currentState.validate()) {
+      _scaffoldKey.currentState.showSnackBar(SnackBar(
+        content: Text(s),
+      ));
     }
+  }
 
-  Future<void> _notificationLater(String note, String time) async {
-    var when = DateTime.now().add(Duration(minutes: int.parse(time)));
+  Future<void> _notificationLater(String note, DateTime when) async {
+    // var when = DateTime.now().add(Duration(minutes: int.parse(time)));
     // print(when);
-    if (int.parse(time) == 1) {
-      await _notifications.sendNotificationLater('Reminder (' + time + ' minute ago): ', note, when, 'payload');
-    } else {
-      await _notifications.sendNotificationLater('Reminder (' + time + ' minutes ago): ', note, when, 'payload');
-    }
-    
+    await _notifications.sendNotificationLater(
+        'Reminder (made on ' +
+            _toDateString(DateTime.now()) +
+            ' at ' +
+            _toTimeString(DateTime.now()) +
+            ') ',
+        note,
+        when,
+        'payload');
   }
 
   Future<void> _showPendingNotifications() async {
-    var pendingNotificationRequests = await _notifications.getPendingNotificationRequests();
+    var pendingNotificationRequests =
+        await _notifications.getPendingNotificationRequests();
     var pendingString = '';
-    
+
     print('Pending requests:');
     for (var pendingRequest in pendingNotificationRequests) {
-      print('${pendingRequest.id}/${pendingRequest.title}/${pendingRequest.body}');
-      pendingString = pendingString + '${pendingRequest.title}' + '\n\t\t${pendingRequest.body}\n';
-
+      print(
+          '${pendingRequest.id}/${pendingRequest.title}/${pendingRequest.body}');
+      pendingString = pendingString +
+          '${pendingRequest.title}' +
+          '\n\t\t${pendingRequest.body}\n';
     }
-    if(pendingString == '') {
+    if (pendingString == '') {
       pendingString = 'You have no upcoming reminders!';
     }
 
     showDialog<void>(
-      barrierDismissible: true, 
+      barrierDismissible: true,
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Your Upcoming Reminders'),
           content: Text(
-            pendingString, 
-            style: TextStyle(fontStyle: FontStyle.italic),),
+            pendingString,
+            style: TextStyle(fontStyle: FontStyle.italic),
+          ),
           actions: <Widget>[
             FlatButton(
               child: Text('Close'),
@@ -167,7 +229,36 @@ class _ReminderPageState extends State<ReminderPage> {
         );
       },
     );
-
   }
 
+  //convert to two digits
+  String _twoDigits(int value) {
+    if (value < 10) {
+      return '0$value';
+    } else {
+      return '$value';
+    }
+  }
+
+  // convert time to string
+  String _toTimeString(DateTime dateTime) {
+    return '${_twoDigits(dateTime.hour)}:${_twoDigits(dateTime.minute)}';
+  }
+
+  //used to check if time is valid
+  int _toTimeInt(DateTime dateTime) {
+    String time = '${_twoDigits(dateTime.hour)}${_twoDigits(dateTime.minute)}';
+    return int.parse(time);
+  }
+
+  // convert date to yyyy/mm/dd
+  String _toDateString(DateTime dateTime) {
+    return '${dateTime.year}/${dateTime.month}/${dateTime.day}';
+  }
+
+  // used to check if date is the same day or not
+  int _toDateInt(DateTime dateTime) {
+    String date = '${dateTime.year}${dateTime.month}${dateTime.day}';
+    return int.parse(date);
+  }
 }
