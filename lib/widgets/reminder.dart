@@ -34,58 +34,58 @@ class _ReminderPageState extends State<ReminderPage> {
         title: Text(widget.title),
       ),
       body: new Form(
-        // key to track form 
+        // key to track form
         key: _formKey,
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Padding(
               padding: EdgeInsets.only(left: 15, top: 10, bottom: 20),
-              child: Row( 
-                children: [
-              // button for picking date
-                  RaisedButton(
-                    child: Text('Select Date'),
-                    textColor: Colors.white,
-                    onPressed: () {
-                      showDatePicker(
-                        context: context,
-                        firstDate: now,
-                        lastDate: DateTime(2100),
-                        initialDate: now,
-                      ).then((value) {
-                        setState(() {
-                          _eventDate = DateTime(
-                            value.year,
-                            value.month,
-                            value.day,
-                            _eventDate.hour,
-                            _eventDate.minute,
-                            _eventDate.second,
-                          );
-                        });
+              child: Row(children: [
+                // button for picking date
+                RaisedButton(
+                  child: Text('Select Date'),
+                  textColor: Colors.white,
+                  color: Colors.grey,
+                  onPressed: () {
+                    showDatePicker(
+                      context: context,
+                      firstDate: now,
+                      lastDate: DateTime(2100),
+                      initialDate: now,
+                    ).then((value) {
+                      setState(() {
+                        _eventDate = DateTime(
+                          value.year,
+                          value.month,
+                          value.day,
+                          _eventDate.hour,
+                          _eventDate.minute,
+                          _eventDate.second,
+                        );
                       });
-                    },
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                    child: Text(_toDateString(_eventDate)),
-                  ),
-                ]
-              ),
+                    });
+                  },
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Text(_toDateString(_eventDate)),
+                ),
+              ]),
             ),
             Padding(
-              padding: EdgeInsets.only(left:15, bottom: 10),
+              padding: EdgeInsets.only(left: 15, bottom: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   RaisedButton(
                     child: Text('Select Time'),
                     textColor: Colors.white,
+                    color: Colors.grey,
                     onPressed: () {
                       showTimePicker(
                         context: context,
-                        initialTime: TimeOfDay( 
+                        initialTime: TimeOfDay(
                           hour: now.hour,
                           minute: now.minute,
                         ),
@@ -112,43 +112,43 @@ class _ReminderPageState extends State<ReminderPage> {
             // textfield to update note
             Padding(
               padding: EdgeInsets.only(top: 5, left: 15),
-                child: TextFormField(
-                  controller: noteController,
-                  decoration: InputDecoration(
-                      hintText: "''Wear a jacket to dinner''",
-                      icon: Icon(Icons.create)
-                      ),
-                  onSaved: (String value) {
-                    print('Saving note $value');
-                    noteController.text = value;
-                  },
-                  validator: (String value) {
-                    print('Validating $value');
-                    if (value.length == 0) {
-                      return 'Invalid note';
-                    } else {
-                      return null;
-                    }
-                  },
-                ),
+              child: TextFormField(
+                controller: noteController,
+                decoration: InputDecoration(
+                    hintText: "''Wear a jacket to dinner''",
+                    icon: Icon(Icons.create)),
+                onSaved: (String value) {
+                  print('Saving note $value');
+                  noteController.text = value;
+                },
+                validator: (String value) {
+                  print('Validating $value');
+                  if (value.length == 0) {
+                    return 'Invalid note';
+                  } else {
+                    return null;
+                  }
+                },
+              ),
             ),
-            // button to create reminder            
+            // button to create reminder
             Padding(
               padding: EdgeInsets.only(top: 20),
               child: FlatButton.icon(
                   icon: Icon(Icons.add_alarm),
                   label: Text('Add New Reminder'),
                   onPressed: () {
-                    print(_eventDate.toString() );
-                    if (_toDateInt(_eventDate) > _toDateInt(now)) {                      
+                    print(_eventDate.toString());
+                    if (_toDateInt(_eventDate) > _toDateInt(now)) {
                       _displaySnackBar(context, 'Creating notification...');
                       _notificationLater(noteController.text, _eventDate);
-                    } else if (_toTimeInt(_eventDate) < _toTimeInt(now)){
-                      _displaySnackBar(context, 'Invalid time input, must select a later time than current');                     
+                    } else if (_toTimeInt(_eventDate) < _toTimeInt(now)) {
+                      _displaySnackBar(context,
+                          'Invalid time input, must select a time later than current!');
                     } else {
                       _displaySnackBar(context, 'Creating notification...');
                       _notificationLater(noteController.text, _eventDate);
-                    }                  
+                    }
                   }),
             ),
             // button to see any pending reminders
@@ -169,7 +169,6 @@ class _ReminderPageState extends State<ReminderPage> {
   //   _notifications.sendNotificationNow('title', 'body', 'payload');
   // }
 
-
   _displaySnackBar(BuildContext context, String s) {
     if (_formKey.currentState.validate()) {
       _scaffoldKey.currentState.showSnackBar(SnackBar(
@@ -180,21 +179,30 @@ class _ReminderPageState extends State<ReminderPage> {
 
   Future<void> _notificationLater(String note, DateTime when) async {
     // var when = DateTime.now().add(Duration(minutes: int.parse(time)));
-    print(when);
-      await _notifications.sendNotificationLater(
-          'Reminder (made on ' + _toDateString(DateTime.now())+ ' at ' + _toTimeString(DateTime.now()) + ') ', note, when, 'payload'
-      );
+    // print(when);
+    await _notifications.sendNotificationLater(
+        'Reminder (made on ' +
+            _toDateString(DateTime.now()) +
+            ' at ' +
+            _toTimeString(DateTime.now()) +
+            ') ',
+        note,
+        when,
+        'payload');
   }
 
   Future<void> _showPendingNotifications() async {
-    var pendingNotificationRequests = await _notifications.getPendingNotificationRequests();
+    var pendingNotificationRequests =
+        await _notifications.getPendingNotificationRequests();
     var pendingString = '';
 
     print('Pending requests:');
     for (var pendingRequest in pendingNotificationRequests) {
       print(
           '${pendingRequest.id}/${pendingRequest.title}/${pendingRequest.body}');
-          pendingString = pendingString + '${pendingRequest.title}' + '\n\t\t${pendingRequest.body}\n';
+      pendingString = pendingString +
+          '${pendingRequest.title}' +
+          '\n\t\t${pendingRequest.body}\n';
     }
     if (pendingString == '') {
       pendingString = 'You have no upcoming reminders!';
@@ -222,7 +230,7 @@ class _ReminderPageState extends State<ReminderPage> {
       },
     );
   }
-  
+
   //convert to two digits
   String _twoDigits(int value) {
     if (value < 10) {
@@ -253,6 +261,4 @@ class _ReminderPageState extends State<ReminderPage> {
     String date = '${dateTime.year}${dateTime.month}${dateTime.day}';
     return int.parse(date);
   }
-  
-
 }

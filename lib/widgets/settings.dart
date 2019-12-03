@@ -41,7 +41,7 @@ class _buildSettingsPage extends State<SettingsPage>{
                     });
                   },
                 ),
-                Text("Switch Themes"),
+                Text("Dark Mode"),
               ],
             ),
             Row(
