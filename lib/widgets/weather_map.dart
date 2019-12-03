@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:latlong/latlong.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+//import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:async';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:google_maps_webservice/places.dart';
@@ -32,9 +32,9 @@ class _MapPageState extends State<MapPage>{
   void initState(){
     _getCurrentLocation();
     
-    DotEnv().load('.env');
+    //DotEnv().load('.env');
 
-    this.googleKey = DotEnv().env['GOOGLE_API'];
+    this.googleKey = 'AIzaSyAjNnwNrnkC3HbvSOdfNF34ALGe7iJaU90';
     this._mapsPlaces = GoogleMapsPlaces(apiKey: googleKey);
 
     super.initState();

@@ -5,7 +5,7 @@ import '../model/db_utils.dart';
 import 'google_search.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:google_maps_webservice/places.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+//import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 //import '../grade_form.dart';
 
@@ -30,9 +30,9 @@ class _CityListState extends State<CityList> {
 
   @override
   void initState() {
-    DotEnv().load('.env');
+    //DotEnv().load('.env');
 
-    this.googleKey = DotEnv().env['GOOGLE_API'];
+    this.googleKey = 'AIzaSyAjNnwNrnkC3HbvSOdfNF34ALGe7iJaU90';
     this._places = GoogleMapsPlaces(apiKey: googleKey);
 
     super.initState();
