@@ -6,6 +6,7 @@ import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:weathernow/widgets/reminder.dart';
 import 'util/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flare_splash_screen/flare_splash_screen.dart';
 
 
 
@@ -55,7 +56,12 @@ class WeatherNow extends StatelessWidget {
             return supportedLocales.first;
           },
 
-          home: WeatherView(title: 'WeatherNow',),
+          home: SplashScreen(
+            'animation/splash.flr',
+            WeatherView(title: 'WeatherNow',),
+            // startAnimation: 'intro',
+            backgroundColor: Colors.white,
+          ),
           routes: <String, WidgetBuilder>{
             '/searchPage': (BuildContext context) {
               return SearchPage();
