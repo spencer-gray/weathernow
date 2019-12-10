@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 // City Class
 class City {
   int id;

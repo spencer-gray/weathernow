@@ -2,18 +2,15 @@ import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 import 'package:darksky_weather/darksky_weather_io.dart';
 import 'package:geocoder/geocoder.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:latlong/latlong.dart';
 import 'package:location/location.dart';
 import 'package:weathernow/widgets/community_photos.dart';
-import 'package:weathernow/widgets/photo_upload.dart';
 import 'package:weathernow/widgets/settings.dart';
 import '../util/darksky.dart';
 import 'manage-cities.dart';
 import 'weather_map.dart';
 import '../model/city.dart';
 import 'package:weathernow/widgets/reminder.dart';
-//import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:weathernow/model/weekdayForecast.dart';
 import '../util/app_localizations.dart';
@@ -466,11 +463,3 @@ class _WeatherViewState extends State<WeatherView> {
   }
 
 }
-
-// No longer used
-// Future<void> _showSearchPage(BuildContext context) async {
-  
-//     var event = await Navigator.pushNamed(context, '/searchPage');
-//     print('search page:');
-//     print(event);
-//   }

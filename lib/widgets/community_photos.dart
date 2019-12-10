@@ -3,9 +3,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:weathernow/model/PhotoModel.dart';
 import 'package:weathernow/model/photo.dart';
-// import '../model/grade.dart';
-// import '../model/GradeModel.dart';
-// import 'grade_form.dart';
 import 'package:weathernow/widgets/photo_upload.dart';
 
 
