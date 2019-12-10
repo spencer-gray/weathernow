@@ -1,4 +1,9 @@
+import 'package:darksky_weather/darksky_weather_io.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:latlong/latlong.dart';
+import 'package:location/location.dart' as loc;
+import 'package:weathernow/util/darksky.dart';
 import '../model/city.dart';
 import '../model/CityModel.dart';
 import '../model/db_utils.dart';
@@ -6,8 +11,6 @@ import 'google_search.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:google_maps_webservice/places.dart';
 //import 'package:flutter_dotenv/flutter_dotenv.dart';
-
-//import '../grade_form.dart';
 
 
 class CityList extends StatefulWidget {
@@ -24,6 +27,8 @@ class _CityListState extends State<CityList> {
   final _model = CityModel();
   var _selectedIndex;
   var _lastInsertedId = 0;
+  var _geoLocator = Geolocator();
+
 
   String googleKey;
   GoogleMapsPlaces _places;
@@ -42,18 +47,33 @@ class _CityListState extends State<CityList> {
   Widget build(BuildContext context) {
 
     _loadData();
+    LatLng latlong;
+
+    findCurrentLocation().then((result) {
+        latlong = result;
+      });
 
     return Scaffold(
       appBar: AppBar(
         title: Text("Manage Locations"),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.location_on),
+            onPressed: () {
+              // opens current location details
+              LatLng _location = LatLng(latlong.latitude, latlong.longitude);
+              Navigator.pop(context, _location);
+            }
+          )
+        ],
       ),
-      body: FutureBuilder(
-        future: _loadData(),
-        initialData: List<City>(),
-        builder: (context, snapshot) {
-          return listCities(snapshot.data);
-        },
 
+      body: FutureBuilder(
+              future: _loadData(),
+              initialData: List<City>(),
+              builder: (context, snapshot) {
+                return listCities(snapshot.data);
+            },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -144,6 +164,21 @@ class _CityListState extends State<CityList> {
       });
   }
 
+  // finds LatLng of devices current location
+  Future<LatLng> findCurrentLocation() async {
+    var location = new loc.Location();
+    loc.LocationData currentLocation;
+
+    try {
+        await location.getLocation().then((result) {
+          currentLocation = result;
+        });
+      } catch (e) {
+        currentLocation = null;
+      }
+    return LatLng(currentLocation.latitude, currentLocation.longitude);
+  }
+
   Widget listCities(List<City> cities) {
     return ListView.separated(
       padding: EdgeInsets.all(20),
@@ -192,7 +227,10 @@ class _CityListState extends State<CityList> {
                 }
               ),
               onTap: () {
+                // opens weather detail-view of on-clicked city with passed LatLng
                 print(city.id.toString() + " was pressed...");
+                LatLng _location = LatLng(double.parse(city.latitude), double.parse(city.longitude));
+                Navigator.pop(context, _location);
               }
             ),
           )

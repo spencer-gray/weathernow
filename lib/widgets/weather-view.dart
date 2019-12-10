@@ -62,6 +62,10 @@ class _WeatherViewState extends State<WeatherView> {
       });
       forecast = _loadForecasts();
     }
+    // if location is not current location
+    else {
+      forecast = _loadSpecifiedForecasts(latlong);
+    }
 
     return FutureBuilder(
       future: forecast,
@@ -394,14 +398,20 @@ class _WeatherViewState extends State<WeatherView> {
   Future<void> _manageCities(BuildContext context) async {
     Navigator.pop(context);
     
-    City result = await Navigator.push(
+    LatLng location = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => CityList()),
     );
 
     // NEEDS IMPLEMENTING: Opens detailed weather view of the list view item pressed.
-    if (result != null) {
-      print(result);
+    if (location != null) {
+      print("opening new weather-details page");
+      latlong = location;
+      currentLocCheck = false;
+      _findCityName(location.latitude, location.longitude);
+    }
+    else {
+      print("null city added...");
     }
   }
 
