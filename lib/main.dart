@@ -57,9 +57,10 @@ class WeatherNow extends StatelessWidget {
           },
 
           home: SplashScreen(
-            'animation/splash.flr',
+            'animation/splashscreen.flr',
             WeatherView(title: 'WeatherNow',),
-            startAnimation: '1',
+            startAnimation: 'intro',
+            endAnimation: 'loading_circle',
             backgroundColor: Colors.white,
           ),
           routes: <String, WidgetBuilder>{

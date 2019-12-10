@@ -65,7 +65,7 @@ flutter:
   assets:
    - lang/en.json
    - lang/fr.json
-   - animation/splash.flr
+   - animation/splashscreen.flr
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
   # assets:
