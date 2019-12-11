@@ -106,9 +106,19 @@ class _WeatherViewState extends State<WeatherView> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget> [
-                        Container(
+                        Column(
                           // need to handle substring size when temp is single vs. double digit
-                          child: Text(snapshot.data.currently.temperature.toString() + '\xb0C', style: TextStyle(fontSize: 50))
+                          children: <Widget>[
+                            Text(snapshot.data.currently.temperature.toString() + '\xb0C', style: TextStyle(fontSize: 50)),
+                            Padding(padding: EdgeInsets.symmetric(vertical: 10)),
+                            Row(
+                              children: <Widget>[
+                                Text("Low: " + snapshot.data.daily.data[0].temperatureMin.round().toString(), style: TextStyle(fontWeight: FontWeight.bold)),
+                                Padding(padding: EdgeInsets.symmetric(horizontal: 10),),
+                                Text("High: " + snapshot.data.daily.data[0].temperatureMax.round().toString(), style: TextStyle(fontWeight: FontWeight.bold)),
+                              ],
+                            )
+                          ], 
                         ),
                         Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
                         Column(
@@ -137,11 +147,10 @@ class _WeatherViewState extends State<WeatherView> {
                     ),
 
                     // 5 day forecast box
-                    Padding(padding: EdgeInsets.symmetric(vertical: 40)),
+                    Padding(padding: EdgeInsets.symmetric(vertical: 30)),
                     _Make5DayForcast(snapshot),
 
                     // Weekday Low + High Chart
-                    //Padding(padding: EdgeInsets.symmetric(vertical: 40)),
                     Container(
                       padding: EdgeInsets.all(10.0),
                       child: SizedBox(
@@ -286,7 +295,7 @@ class _WeatherViewState extends State<WeatherView> {
 
   Widget _Make5DayForcast(AsyncSnapshot<dynamic> snapshot){
     List<Widget> panes = [];
-    for(int x = 0; x < 5; x++){
+    for(int x = 1; x <= 5; x++){
       panes.add(
         Column(
           children: <Widget>[
@@ -324,7 +333,14 @@ class _WeatherViewState extends State<WeatherView> {
   // finds location 
   Future<void> _findCityName(double lat, double long) async{
     var address = await Geocoder.local.findAddressesFromCoordinates(Coordinates(lat, long));
-    locationTitle = address.first.locality + ", " + address.first.adminArea;
+
+    // handles when current devices lcoality is null
+    if (address.first.locality == null) {
+      locationTitle = address.first.subAdminArea + ", " + address.first.adminArea;
+    }
+    else {
+      locationTitle = address.first.locality + ", " + address.first.adminArea;
+    }
     setState(() {});
   }
 
