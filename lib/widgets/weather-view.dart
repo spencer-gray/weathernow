@@ -15,9 +15,6 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:weathernow/model/weekdayForecast.dart';
 import '../util/app_localizations.dart';
 
-
-
-
 class WeatherView extends StatefulWidget {
   WeatherView({Key key, this.title}) : super(key: key);
 
@@ -373,7 +370,7 @@ class _WeatherViewState extends State<WeatherView> {
   // finds location 
   Future<void> _findCityName(double lat, double long) async{
     var address = await Geocoder.local.findAddressesFromCoordinates(Coordinates(lat, long));
-    locationTitle = address.first.subAdminArea + ", " + address.first.adminArea;
+    locationTitle = address.first.locality + ", " + address.first.adminArea;
     setState(() {});
   }
 
@@ -400,7 +397,7 @@ class _WeatherViewState extends State<WeatherView> {
       MaterialPageRoute(builder: (context) => CityList()),
     );
 
-    // NEEDS IMPLEMENTING: Opens detailed weather view of the list view item pressed.
+    // Opens detailed weather view of the list view item pressed.
     if (location != null) {
       print("opening new weather-details page");
       latlong = location;
@@ -448,7 +445,6 @@ class _WeatherViewState extends State<WeatherView> {
     );
   }
 
-  // (WORK IN PROGRESS) opens the community photos page
   Future<void> _communityPhotosPage(BuildContext context) async {
     Navigator.pop(context);
     

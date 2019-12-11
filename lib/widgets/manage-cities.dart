@@ -157,10 +157,8 @@ class _CityListState extends State<CityList> {
     _model.deleteCityById(id);
     print("deleted " + id.toString());
 
-    // this empty setState will automatically update UI
-    // to reflect database deletion
     setState(() {
-        
+  
       });
   }
 
@@ -230,6 +228,7 @@ class _CityListState extends State<CityList> {
                 // opens weather detail-view of on-clicked city with passed LatLng
                 print(city.id.toString() + " was pressed...");
                 LatLng _location = LatLng(double.parse(city.latitude), double.parse(city.longitude));
+                // just pop city here...
                 Navigator.pop(context, _location);
               }
             ),
