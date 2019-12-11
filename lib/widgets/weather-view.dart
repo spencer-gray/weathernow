@@ -138,90 +138,7 @@ class _WeatherViewState extends State<WeatherView> {
 
                     // 5 day forecast box
                     Padding(padding: EdgeInsets.symmetric(vertical: 40)),
-                    Container(
-                      margin: EdgeInsets.all(10),
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(border: Border.all(
-                        color: Colors.blueGrey,
-                        width: 1.0,
-                        style: BorderStyle.solid,
-                      )),
-                      child: Row( 
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Column(
-                                  children: <Widget>[
-                                    Text(weekdays[(DateTime.fromMillisecondsSinceEpoch(snapshot.data.daily.data[0].time*1000).weekday)%7], style: TextStyle(fontSize: 11)),
-                                    Image.network('https://darksky.net/images/weather-icons/' + snapshot.data.daily.data[0].icon + '.png', width: 25, height: 25,),
-                                    Row (
-                                      children: <Widget>[
-                                        Text(snapshot.data.daily.data[0].temperatureMax.round().toString(), style: TextStyle(fontSize: 11)),
-                                        Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
-                                        Text(snapshot.data.daily.data[0].temperatureMin.round().toString(), style: TextStyle(fontSize: 11)),
-                                      ],
-                                    ),
-                                  ]
-                                ),
-                                Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
-                                Column(
-                                  children: <Widget>[
-                                    Text(weekdays[(DateTime.fromMillisecondsSinceEpoch(snapshot.data.daily.data[1].time*1000).weekday)%7], style: TextStyle(fontSize: 11)),
-                                    Image.network('https://darksky.net/images/weather-icons/' + snapshot.data.daily.data[1].icon + '.png', width: 25, height: 25,),
-                                    Row (
-                                      children: <Widget>[
-                                        Text(snapshot.data.daily.data[1].temperatureMax.round().toString(), style: TextStyle(fontSize: 11)),
-                                        Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
-                                        Text(snapshot.data.daily.data[1].temperatureMin.round().toString(), style: TextStyle(fontSize: 11)),
-                                      ],
-                                    ),
-                                  ]
-                                ),
-                                Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
-                                Column(
-                                  children: <Widget>[
-                                    Text(weekdays[(DateTime.fromMillisecondsSinceEpoch(snapshot.data.daily.data[2].time*1000).weekday)%7], style: TextStyle(fontSize: 11)),
-                                    Image.network('https://darksky.net/images/weather-icons/' + snapshot.data.daily.data[2].icon + '.png', width: 25, height: 25,),
-                                    Row (
-                                      children: <Widget>[
-                                        Text(snapshot.data.daily.data[2].temperatureMax.round().toString(), style: TextStyle(fontSize: 11)),
-                                        Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
-                                        Text(snapshot.data.daily.data[2].temperatureMin.round().toString(), style: TextStyle(fontSize: 11)),
-                                      ],
-                                    ),
-                                  ]
-                                ),
-                                Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
-                                Column(
-                                  children: <Widget>[
-                                    Text(weekdays[(DateTime.fromMillisecondsSinceEpoch(snapshot.data.daily.data[3].time*1000).weekday)%7], style: TextStyle(fontSize: 11)),
-                                    Image.network('https://darksky.net/images/weather-icons/' + snapshot.data.daily.data[3].icon + '.png', width: 25, height: 25,),
-                                    Row (
-                                      children: <Widget>[
-                                        Text(snapshot.data.daily.data[3].temperatureMax.round().toString(), style: TextStyle(fontSize: 11)),
-                                        Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
-                                        Text(snapshot.data.daily.data[3].temperatureMin.round().toString(), style: TextStyle(fontSize: 11)),
-                                      ],
-                                    ),
-                                  ]
-                                ),
-                                Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
-                                Column(
-                                  children: <Widget>[
-                                    Text(weekdays[(DateTime.fromMillisecondsSinceEpoch(snapshot.data.daily.data[4].time*1000).weekday)%7], style: TextStyle(fontSize: 11)),
-                                    Image.network('https://darksky.net/images/weather-icons/' + snapshot.data.daily.data[4].icon + '.png', width: 25, height: 25,),
-                                    Row (
-                                      children: <Widget>[
-                                        Text(snapshot.data.daily.data[4].temperatureMax.round().toString(), style: TextStyle(fontSize: 11)),
-                                        Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
-                                        Text(snapshot.data.daily.data[4].temperatureMin.round().toString(), style: TextStyle(fontSize: 11)),
-                                      ],
-                                    ),
-                                  ]
-                                ),
-                              ],
-                            ),
-                                
-                    ),
+                    _Make5DayForcast(snapshot),
 
                     // Weekday Low + High Chart
                     //Padding(padding: EdgeInsets.symmetric(vertical: 40)),
@@ -364,6 +281,43 @@ class _WeatherViewState extends State<WeatherView> {
         }
       }
 
+    );
+  }
+
+  Widget _Make5DayForcast(AsyncSnapshot<dynamic> snapshot){
+    List<Widget> panes = [];
+    for(int x = 0; x < 5; x++){
+      panes.add(
+        Column(
+          children: <Widget>[
+            Text(weekdays[(DateTime.fromMillisecondsSinceEpoch(snapshot.data.daily.data[x].time*1000).weekday)%7], style: TextStyle(fontSize: 11)),
+            Image.network('https://darksky.net/images/weather-icons/' + snapshot.data.daily.data[x].icon + '.png', width: 25, height: 25,),
+            Row (
+              children: <Widget>[
+                Text(snapshot.data.daily.data[x].temperatureMax.round().toString(), style: TextStyle(fontSize: 11)),
+                Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
+                Text(snapshot.data.daily.data[x].temperatureMin.round().toString(), style: TextStyle(fontSize: 11)),
+              ],
+            ),
+          ]
+        )
+      );
+      if(x < 4)
+        panes.add(Padding(padding: EdgeInsets.symmetric(horizontal: 10)));
+    }
+
+    return Container(
+      margin: EdgeInsets.all(10),
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(border: Border.all(
+        color: Colors.blueGrey,
+        width: 1.0,
+        style: BorderStyle.solid,
+      )),
+      child: Row( 
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: panes
+      )
     );
   }
 
