@@ -75,9 +75,6 @@ class _WeatherViewState extends State<WeatherView> {
 
           // initializing weekday data to be displayed in chart
           List<WeekdayForecast> _weekdayData = [
-            WeekdayForecast(weekday: weekdays[(DateTime.fromMillisecondsSinceEpoch(snapshot.data.daily.data[0].time*1000).weekday)%7],
-                            dailyLow: snapshot.data.daily.data[0].temperatureMin,
-                            dailyHigh: snapshot.data.daily.data[0].temperatureMax),
             WeekdayForecast(weekday: weekdays[(DateTime.fromMillisecondsSinceEpoch(snapshot.data.daily.data[1].time*1000).weekday)%7],
                             dailyLow: snapshot.data.daily.data[1].temperatureMin,
                             dailyHigh: snapshot.data.daily.data[1].temperatureMax),
@@ -89,7 +86,10 @@ class _WeatherViewState extends State<WeatherView> {
                             dailyHigh: snapshot.data.daily.data[3].temperatureMax),
             WeekdayForecast(weekday: weekdays[(DateTime.fromMillisecondsSinceEpoch(snapshot.data.daily.data[4].time*1000).weekday)%7],
                             dailyLow: snapshot.data.daily.data[4].temperatureMin,
-                            dailyHigh: snapshot.data.daily.data[4].temperatureMax),                          
+                            dailyHigh: snapshot.data.daily.data[4].temperatureMax),
+            WeekdayForecast(weekday: weekdays[(DateTime.fromMillisecondsSinceEpoch(snapshot.data.daily.data[5].time*1000).weekday)%7],
+                            dailyLow: snapshot.data.daily.data[5].temperatureMin,
+                            dailyHigh: snapshot.data.daily.data[5].temperatureMax),                          
           ];
 
           return Scaffold(
