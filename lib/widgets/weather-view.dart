@@ -26,7 +26,7 @@ class WeatherView extends StatefulWidget {
 
 class _WeatherViewState extends State<WeatherView> {
 
-  List<String> weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  List<String> weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   LatLng latlong;
   Future<Forecast> forecast;
   bool currentLocCheck = true;
@@ -311,8 +311,8 @@ class _WeatherViewState extends State<WeatherView> {
           ]
         )
       );
-      if(x < 4)
-        panes.add(Padding(padding: EdgeInsets.symmetric(horizontal: 10)));
+      if(x < 5)
+        panes.add(Padding(padding: EdgeInsets.symmetric(horizontal: 15)));
     }
 
     return Container(
