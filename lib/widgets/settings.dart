@@ -19,14 +19,16 @@ class SettingsPage extends StatefulWidget {
 class BuildSettingsPage extends State<SettingsPage> {
 
   bool returnNotif;
+  String _current;
+  List<String> locales = ['en', 'fr'];
 
   @override
   Widget build(BuildContext context) {
 
-    List<String> locales = ['en', 'fr'];
-    String _current = Localizations.localeOf(context).languageCode;
-    if(returnNotif == null)
+    if(returnNotif == null){
       returnNotif = widget.notif;
+      _current = Localizations.localeOf(context).languageCode;
+    }
     
     return Scaffold(
       appBar: AppBar(
