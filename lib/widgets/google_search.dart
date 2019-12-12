@@ -64,18 +64,6 @@ class _SearchPageState extends State<SearchPage> {
     if (p != null) {
       PlacesDetailsResponse detail =
       await _places.getDetailsByPlaceId(p.placeId);
-
-      //var placeId = p.placeId;
-      double lat = detail.result.geometry.location.lat;
-      double long = detail.result.geometry.location.lng;
-      var time = detail.result.openingHours;
-
-
-      //var address = await Geocoder.local.findAddressesFromQuery(p.description);
-
-      print("lat: "+ lat.toString());
-      print("long: "+ long.toString());
-      print("time: " + time.toString());
     }
   }
 }

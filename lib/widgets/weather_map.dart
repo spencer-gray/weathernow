@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-
 import 'package:latlong/latlong.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
-//import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:async';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:google_maps_webservice/places.dart';
@@ -32,15 +30,11 @@ class _MapPageState extends State<MapPage>{
   void initState(){
     _getCurrentLocation();
     
-    //DotEnv().load('.env');
-
     this.googleKey = 'AIzaSyAjNnwNrnkC3HbvSOdfNF34ALGe7iJaU90';
     this._mapsPlaces = GoogleMapsPlaces(apiKey: googleKey);
 
     super.initState();
-    /*_geoLocator.getPositionStream(LocationOptions(accuracy: LocationAccuracy.best, timeInterval: 10000)).listen((userLocation){
-      _updateLocaiton(userLocation);
-    });*/
+
   }
 
   @override
@@ -109,15 +103,6 @@ class _MapPageState extends State<MapPage>{
                     ),
                   ],
                 ),
-                PolylineLayerOptions(
-                    /*polylines: [
-                    Polyline(
-                      points: path,
-                      strokeWidth: 2.0,
-                      color: Colors.blue,
-                    ),
-                  ],*/
-                ),
               ],
             ),
           );
@@ -157,15 +142,7 @@ class _MapPageState extends State<MapPage>{
     }
   }
 
-  /*void _updateLocaiton(Position userLocation){
-    centre = LatLng(userLocation.latitude, userLocation.longitude);
-    _geoLocator.placemarkFromPosition(userLocation).then((List<Placemark> places){
-
-    });
-  }*/
-
   Future<String> _getAPI() async{
-    //await DotEnv().load('.env');
     return "pk.eyJ1IjoiamltbXlqb2U2NyIsImEiOiJjazJ3ZW55MjgwMTU4M2JvbTd1MzRybDNmIn0.AE0eYpvn456vVKXO8EUQ3Q";
   }
 

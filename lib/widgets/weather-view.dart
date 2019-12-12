@@ -106,7 +106,6 @@ class _WeatherViewState extends State<WeatherView> {
           return Scaffold(
             appBar: AppBar(
               title: Text(locationTitle),
-              //title: Text("Mountain View, CA"),
               centerTitle: true,
             ),
             body: ListView(
@@ -118,15 +117,14 @@ class _WeatherViewState extends State<WeatherView> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget> [
                         Column(
-                          // need to handle substring size when temp is single vs. double digit
                           children: <Widget>[
                             Text(snapshot.data.currently.temperature.toString() + '\xb0C', style: TextStyle(fontSize: 50)),
                             Padding(padding: EdgeInsets.symmetric(vertical: 10)),
                             Row(
                               children: <Widget>[
-                                Text("${FlutterI18n.translate(context, "low")}: " + snapshot.data.daily.data[0].temperatureMin.round().toString(), style: TextStyle(fontWeight: FontWeight.bold)),
+                                Text("${FlutterI18n.translate(context, "low")}: " + snapshot.data.daily.data[0].temperatureMin.round().toString() + '\xb0C', style: TextStyle(fontWeight: FontWeight.bold)),
                                 Padding(padding: EdgeInsets.symmetric(horizontal: 10),),
-                                Text("${FlutterI18n.translate(context, "high")}: " + snapshot.data.daily.data[0].temperatureMax.round().toString(), style: TextStyle(fontWeight: FontWeight.bold)),
+                                Text("${FlutterI18n.translate(context, "high")}: " + snapshot.data.daily.data[0].temperatureMax.round().toString() + '\xb0C', style: TextStyle(fontWeight: FontWeight.bold)),
                               ],
                             )
                           ], 
@@ -240,7 +238,6 @@ class _WeatherViewState extends State<WeatherView> {
 
             drawer: Drawer(
               child:  ListView(
-                //padding: EdgeInsets.zero,
                 children: <Widget>[
                   ListTile(
                     leading: Icon(Icons.location_city),
@@ -258,8 +255,6 @@ class _WeatherViewState extends State<WeatherView> {
                    ListTile(
                     leading: Icon(Icons.photo),
                     title: Text(FlutterI18n.translate(context, 'menus.community_photos')),
-                    //onTap: () => {},
-                    // (WORK IN PROGRESS)
                     onTap: () => _communityPhotosPage(context),
                   ),
                   notif? ListTile(
@@ -267,7 +262,6 @@ class _WeatherViewState extends State<WeatherView> {
                     title: Text(FlutterI18n.translate(context, 'menus.reminders')),
                     onTap: () {
                       Locale myLocale = Locale(ui.window.locale.languageCode);
-                      print("Reminders pressed...");
                       print(myLocale);
                       Navigator.of(context).pop();
                       _reminderPage(context);
@@ -277,7 +271,6 @@ class _WeatherViewState extends State<WeatherView> {
                     leading: Icon(Icons.settings),
                     title: Text(FlutterI18n.translate(context, 'menus.settings')),
                     onTap: () {
-                      print("Settings pressed...");                      
                       Navigator.of(context).pop();
                       _settingsPage(context);
                     }
@@ -292,7 +285,6 @@ class _WeatherViewState extends State<WeatherView> {
                 ],
               ),
             ),
-            //bottomSheet: menu(), 
           );
         }
 
@@ -314,16 +306,16 @@ class _WeatherViewState extends State<WeatherView> {
             Image.network('https://darksky.net/images/weather-icons/' + snapshot.data.daily.data[x].icon + '.png', width: 25, height: 25,),
             Row (
               children: <Widget>[
-                Text(snapshot.data.daily.data[x].temperatureMax.round().toString(), style: TextStyle(fontSize: 11)),
-                Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
                 Text(snapshot.data.daily.data[x].temperatureMin.round().toString(), style: TextStyle(fontSize: 11)),
+                Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
+                Text(snapshot.data.daily.data[x].temperatureMax.round().toString(), style: TextStyle(fontSize: 11)),
               ],
             ),
           ]
         )
       );
       if(x < 5)
-        panes.add(Padding(padding: EdgeInsets.symmetric(horizontal: 15)));
+        panes.add(Padding(padding: EdgeInsets.symmetric(horizontal: 13)));
     }
 
     return Container(
@@ -390,7 +382,6 @@ class _WeatherViewState extends State<WeatherView> {
 
     // Opens detailed weather view of the list view item pressed.
     if (location != null) {
-      print("opening new weather-details page");
       latlong = location;
       currentLocCheck = false;
       _findCityName(location.latitude, location.longitude);

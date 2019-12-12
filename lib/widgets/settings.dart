@@ -145,7 +145,6 @@ class BuildSettingsPage extends State<SettingsPage> {
                 "Group Members: \nSpencer Gray\nHassan Tariq\nJames LeBlanc\n\n" +
                 "GitHub Source Code: \n" +
                 "https://github.com/spencer-gray/weathernow",
-            // style: TextStyle(fontStyle: FontStyle.italic),
           ),
           actions: <Widget>[
             FlatButton(

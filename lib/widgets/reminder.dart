@@ -38,7 +38,6 @@ class _ReminderPageState extends State<ReminderPage> {
         // key to track form
         key: _formKey,
         child: Column(
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Padding(
               padding: EdgeInsets.only(left: 15, top: 10, bottom: 20),
@@ -165,10 +164,6 @@ class _ReminderPageState extends State<ReminderPage> {
     );
   }
 
-  // void _notificationNow() {
-  //   _notifications.sendNotificationNow('title', 'body', 'payload');
-  // }
-
   _displaySnackBar(BuildContext context, String s) {
     if (_formKey.currentState.validate()) {
       _scaffoldKey.currentState.showSnackBar(SnackBar(
@@ -178,8 +173,6 @@ class _ReminderPageState extends State<ReminderPage> {
   }
 
   Future<void> _notificationLater(String note, DateTime when) async {
-    // var when = DateTime.now().add(Duration(minutes: int.parse(time)));
-    // print(when);
     await _notifications.sendNotificationLater(
         'Reminder (made on ' +
             _toDateString(DateTime.now()) +

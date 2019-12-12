@@ -25,7 +25,6 @@ class _CityListState extends State<CityList> {
 
   @override
   void initState() {
-    //DotEnv().load('.env');
 
     this.googleKey = 'AIzaSyAjNnwNrnkC3HbvSOdfNF34ALGe7iJaU90';
     this._places = GoogleMapsPlaces(apiKey: googleKey);
@@ -92,13 +91,11 @@ class _CityListState extends State<CityList> {
 
   // Opens CityForm page and adds non null entries to DB
   Future<void> _addCity() async {
-    print("Add City pressed");
 
     Prediction p = await PlacesAutocomplete.show(context: context, apiKey: googleKey, mode: Mode.overlay,);
     if (p != null) {
       PlacesDetailsResponse detail = await _places.getDetailsByPlaceId(p.placeId);
 
-      //var placeId = p.placeId;
       double lat = detail.result.geometry.location.lat;
       double long = detail.result.geometry.location.lng;
       String name = detail.result.name;
@@ -124,18 +121,12 @@ class _CityListState extends State<CityList> {
         locationStr = detail.result.name;
       }
 
-      print(locationStr);
-      print("lat: "+ lat.toString());
-      print("long: "+ long.toString());
-
       City newCity = City(name: locationStr, latitude: lat.toString(), longitude: long.toString());
-
-      print("New City Added!");
 
       await _model.insertCity(newCity);
 
       setState(() {
-        
+      
       });
     }
     else {
@@ -146,7 +137,6 @@ class _CityListState extends State<CityList> {
   // Deletes selected listview's data from DB
   Future<void> _deleteCity(int id) async {
     _model.deleteCityById(id);
-    print("deleted " + id.toString());
 
     setState(() {
   
@@ -217,7 +207,6 @@ class _CityListState extends State<CityList> {
               ),
               onTap: () {
                 // opens weather detail-view of on-clicked city with passed LatLng
-                print(city.id.toString() + " was pressed...");
                 LatLng _location = LatLng(double.parse(city.latitude), double.parse(city.longitude));
                 Navigator.pop(context, _location);
               }
