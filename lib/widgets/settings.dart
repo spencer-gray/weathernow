@@ -4,11 +4,13 @@ app to their liking
 */
 import 'package:dynamic_theme/dynamic_theme.dart';
 import "package:flutter/material.dart";
+import 'package:flutter_i18n/flutter_i18n.dart';
 
 class SettingsPage extends StatefulWidget {
   String title;
+  bool notif;
 
-  SettingsPage({this.title});
+  SettingsPage({this.notif, this.title});
 
   @override
   _buildSettingsPage createState() => _buildSettingsPage();
@@ -17,15 +19,27 @@ class SettingsPage extends StatefulWidget {
 class _buildSettingsPage extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
+
+    List<String> locales = ['en', 'fr'];
+    String _current = Localizations.localeOf(context).languageCode;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        leading: IconButton(
+          icon:Icon(Icons.arrow_back),
+          onPressed:() => Navigator.of(context).pop(widget.notif),
+        ),
       ),
       body: Align(
         child: Column(
           children: <Widget>[
             Row(
               children: <Widget>[
+                Padding(padding: EdgeInsets.only(left: 15),),
+                Icon(Icons.brightness_3),
+                Padding(padding: EdgeInsets.only(left: 15),),
+                Text(FlutterI18n.translate(context, 'settings.dark_mode')),
                 Switch(
                   value: Theme.of(context).brightness == Brightness.light
                       ? false
@@ -41,33 +55,48 @@ class _buildSettingsPage extends State<SettingsPage> {
                     });
                   },
                 ),
-                Text("Dark Mode"),
               ],
             ),
             Row(
               children: <Widget>[
+                Padding(padding: EdgeInsets.only(left: 15),),
+                Icon(Icons.chat_bubble),
+                Padding(padding: EdgeInsets.only(left: 15),),
+                Text(FlutterI18n.translate(context, 'settings.notifications')),
                 Switch(
-                    value: false,
-                    onChanged: (value) {
-                      setState(() {
-                        //if(value) value = false;
-                        //else value = true;
-                      });
-                    }),
-                Text("Notifications"),
+                  value: widget.notif,
+                  onChanged: (value) {
+                    setState(() {
+                      if(value) widget.notif = true;
+                      else widget.notif = false;
+                    });
+                  }
+                ),
               ],
             ),
             Row(
               children: <Widget>[
-                Switch(
-                    value: false,
-                    onChanged: (value) {
-                      setState(() {
-                        //if(value) value = false;
-                        //else value = true;
-                      });
-                    }),
-                Text("Display Fahrenheit"),
+                Padding(padding: EdgeInsets.only(left: 15),),
+                Icon(Icons.loop),
+                Padding(padding: EdgeInsets.only(left: 15),),
+                Text(FlutterI18n.translate(context, 'settings.language')),
+                Padding(padding: EdgeInsets.only(left: 15)),
+                DropdownButton(
+                  value: _current,
+                  items: locales.map<DropdownMenuItem<String>>((String item) {
+                    return DropdownMenuItem<String>(
+                      value: item,
+                      child: Text(item),
+                    );
+                  }).toList(),
+                  onChanged: ((String change) {
+                    Locale locale = new Locale(change);
+                    setState(() {
+                      FlutterI18n.refresh(context, locale);
+                      _current = change;
+                    });
+                  }),
+                ),
               ],
             ),
             Padding(
@@ -79,7 +108,7 @@ class _buildSettingsPage extends State<SettingsPage> {
                     size: 30.0,
                   ),
                   FlatButton(
-                    child: Text("About Us"),
+                    child: Text(FlutterI18n.translate(context, 'settings.about_us')),
                     onPressed: _showAboutUs,
                   )
                 ],

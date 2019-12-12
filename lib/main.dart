@@ -6,6 +6,7 @@ import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:weathernow/widgets/reminder.dart';
 import 'util/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_i18n/flutter_i18n_delegate.dart';
 import 'package:flare_splash_screen/flare_splash_screen.dart';
 
 
@@ -38,7 +39,11 @@ class WeatherNow extends StatelessWidget {
           ],
           localizationsDelegates: [
             // load json
-            AppLocalizations.delegate,
+            FlutterI18nDelegate(
+              useCountryCode: false,
+              fallbackFile: 'en',
+              path: 'lang',
+            ),
             // basic text
             GlobalMaterialLocalizations.delegate,
             // direct text

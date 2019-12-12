@@ -1,4 +1,23 @@
 {
     "app_title": "MétéoNow",
-    "Reminders": "Ajouter Mémentos"
+    "Reminders": "Ajouter Mémentos",
+    "low": "Faible",
+    "high": "Haut",
+
+    "weekdays":{
+        "sunday": "Dimanche",
+        "monday": "Lundi",
+        "tuesday": "Mardi",
+        "wednesday": "Mercredi",
+        "thursday": "Jeudi",
+        "friday": "Vendredi",
+        "saturday": "samedi" 
+    },
+
+    "settings": {
+        "dark_mode": "Mode sombre",
+        "notifications": "Notifications",
+        "language": "La langue",
+        "about_us": "À propos de nous"
+    }
 }

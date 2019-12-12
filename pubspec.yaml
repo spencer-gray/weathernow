@@ -38,6 +38,7 @@ dependencies:
   flutter_local_notifications: 
   geocoder: ^0.2.1
   flare_splash_screen: ^2.0.1+2
+  flutter_i18n:
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -63,8 +64,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-   - lang/en.json
-   - lang/fr.json
+   - lang/
    - animation/splashscreen.flr
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg

@@ -14,6 +14,7 @@ import 'package:weathernow/widgets/reminder.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:weathernow/model/weekdayForecast.dart';
 import '../util/app_localizations.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 
 class WeatherView extends StatefulWidget {
   WeatherView({Key key, this.title}) : super(key: key);
@@ -26,11 +27,12 @@ class WeatherView extends StatefulWidget {
 
 class _WeatherViewState extends State<WeatherView> {
 
-  List<String> weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  List<String> weekdays;
   LatLng latlong;
   Future<Forecast> forecast;
   bool currentLocCheck = true;
   String locationTitle = " ";
+  bool notif = false;
 
   Future<LatLng> findCurrentLocation() async {
     var location = new Location();
@@ -48,6 +50,19 @@ class _WeatherViewState extends State<WeatherView> {
 
   @override
   Widget build(BuildContext context) {
+    
+    print(FlutterI18n.translate(context, "weekdays.monday"));
+
+    weekdays = [
+      FlutterI18n.translate(context, "weekdays.monday"),
+      FlutterI18n.translate(context, "weekdays.tuesday"),
+      FlutterI18n.translate(context, "weekdays.wednesday"),
+      FlutterI18n.translate(context, "weekdays.thursday"),
+      FlutterI18n.translate(context, "weekdays.friday"),
+      FlutterI18n.translate(context, "weekdays.saturday"),
+      FlutterI18n.translate(context, "weekdays.sunday"),
+    ];
+
     _loadForecasts();
 
     if (currentLocCheck) {
@@ -113,9 +128,9 @@ class _WeatherViewState extends State<WeatherView> {
                             Padding(padding: EdgeInsets.symmetric(vertical: 10)),
                             Row(
                               children: <Widget>[
-                                Text("Low: " + snapshot.data.daily.data[0].temperatureMin.round().toString(), style: TextStyle(fontWeight: FontWeight.bold)),
+                                Text("${FlutterI18n.translate(context, "low")}: " + snapshot.data.daily.data[0].temperatureMin.round().toString(), style: TextStyle(fontWeight: FontWeight.bold)),
                                 Padding(padding: EdgeInsets.symmetric(horizontal: 10),),
-                                Text("High: " + snapshot.data.daily.data[0].temperatureMax.round().toString(), style: TextStyle(fontWeight: FontWeight.bold)),
+                                Text("${FlutterI18n.translate(context, "high")}: " + snapshot.data.daily.data[0].temperatureMax.round().toString(), style: TextStyle(fontWeight: FontWeight.bold)),
                               ],
                             )
                           ], 
@@ -251,7 +266,7 @@ class _WeatherViewState extends State<WeatherView> {
                     // (WORK IN PROGRESS)
                     onTap: () => _communityPhotosPage(context),
                   ),
-                  ListTile(
+                  notif? ListTile(
                     leading: Icon(Icons.calendar_today),
                     title: Text(AppLocalizations.of(context).translate('Reminders')),
                     onTap: () {
@@ -261,7 +276,7 @@ class _WeatherViewState extends State<WeatherView> {
                       Navigator.of(context).pop();
                       _reminderPage(context);
                     }
-                  ),
+                  ) : Padding(padding: EdgeInsets.only(top: 0.0),),
                   ListTile(
                     leading: Icon(Icons.settings),
                     title: Text('Settings'),
@@ -311,7 +326,7 @@ class _WeatherViewState extends State<WeatherView> {
           ]
         )
       );
-      if(x < 4)
+      if(x <= 4)
         panes.add(Padding(padding: EdgeInsets.symmetric(horizontal: 10)));
     }
 
@@ -398,10 +413,12 @@ class _WeatherViewState extends State<WeatherView> {
       MaterialPageRoute(
         builder: (context) => SettingsPage(
           title: "Settings Page",
+          notif: notif,
         ),
       ),
     );
-    
+    notif = event;
+
   }
 
   Future<void> _mapPage(BuildContext context) async{
