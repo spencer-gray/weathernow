@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:weathernow/model/PhotoModel.dart';
 import 'package:weathernow/model/photo.dart';
 import 'package:weathernow/widgets/photo_upload.dart';
 
@@ -17,11 +15,6 @@ class CommunityPhotos extends StatefulWidget {
 
 class _CommunityPhotosState extends State<CommunityPhotos> {
 
-   final _model = PhotosModel();
-  var _selectedGrade;
-  var _selectedIndex = null;
-  var _lastInsertedRef;
-
   final photosList = Firestore.instance.collection('photos');
 
   @override
@@ -30,11 +23,9 @@ class _CommunityPhotosState extends State<CommunityPhotos> {
       appBar: AppBar(
         title: Text("Community Photos"),
       ),
-      // body has a current placeholder, put listGrades in
       body: listGrades(context),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // open photo_upload
           _uploadImagePage(context);
         },
         tooltip: 'New Photo',
@@ -44,7 +35,6 @@ class _CommunityPhotosState extends State<CommunityPhotos> {
   }
 
   Future<void> _uploadImagePage(BuildContext context) async {
-    //Navigator.pop(context);
     
     var result = await Navigator.push(
       context,
@@ -82,24 +72,12 @@ class _CommunityPhotosState extends State<CommunityPhotos> {
         Padding(padding: EdgeInsets.symmetric(vertical: 30)),
         GestureDetector(
           child: Container(
-            //padding: EdgeInsets.symmetric(vertical: 30),
-            // decoration: BoxDecoration(
-            //   color: (photo.reference == _selectedIndex) ? Colors.blue : Colors.white,
-            // ),
             child: ClipRRect(
                 borderRadius: new BorderRadius.circular(20.0),
                 child: Image.network(photo.path,
-                        //width: 400,
-                        //height: 350,
                         fit: BoxFit.fill
                       ),
               ),
-              //subtitle: Text('test'),
-              // onTap: () {
-              //   setState(() { _selectedIndex = photo.reference;
-              //                 //_selectedPhoto = photo; 
-              //               });
-              // }
           )
         ),
       ],

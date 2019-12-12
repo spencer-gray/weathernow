@@ -56,7 +56,6 @@ class _MapPageState extends State<MapPage>{
               actions: <Widget>[
                 IconButton(
                   icon: Icon(Icons.search),
-                  color: Colors.blue,
                   onPressed: () {
                     searchCities();
                   },
@@ -64,7 +63,6 @@ class _MapPageState extends State<MapPage>{
                 ),
                 IconButton(
                   icon: Icon(Icons.my_location),
-                  color: Colors.blue,
                   onPressed: () {
                     _getCurrentLocation();
                   },

@@ -7,21 +7,22 @@ import "package:flutter/material.dart";
 import 'package:flutter_i18n/flutter_i18n.dart';
 
 class SettingsPage extends StatefulWidget {
-  String title;
-  bool notif;
+  final String title;
+  final bool notif;
 
   SettingsPage({this.notif, this.title});
 
   @override
-  _buildSettingsPage createState() => _buildSettingsPage();
+  BuildSettingsPage createState() => BuildSettingsPage();
 }
 
-class _buildSettingsPage extends State<SettingsPage> {
+class BuildSettingsPage extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
 
     List<String> locales = ['en', 'fr'];
     String _current = Localizations.localeOf(context).languageCode;
+    bool returnNotif = widget.notif;
 
     return Scaffold(
       appBar: AppBar(
@@ -64,11 +65,11 @@ class _buildSettingsPage extends State<SettingsPage> {
                 Padding(padding: EdgeInsets.only(left: 15),),
                 Text(FlutterI18n.translate(context, 'settings.notifications')),
                 Switch(
-                  value: widget.notif,
+                  value: returnNotif,
                   onChanged: (value) {
                     setState(() {
-                      if(value) widget.notif = true;
-                      else widget.notif = false;
+                      if(value) returnNotif = true;
+                      else returnNotif = false;
                     });
                   }
                 ),

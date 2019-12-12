@@ -4,12 +4,9 @@ import 'widgets/google_search.dart';
 import 'widgets/weather-view.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:weathernow/widgets/reminder.dart';
-import 'util/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_i18n/flutter_i18n_delegate.dart';
 import 'package:flare_splash_screen/flare_splash_screen.dart';
-
-
 
 
 void main() => runApp(WeatherNow());
