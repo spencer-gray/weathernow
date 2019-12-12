@@ -1,8 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:google_maps_webservice/places.dart';
-//import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 
 class SearchPage extends StatefulWidget {
@@ -17,7 +15,6 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   void initState() {
-    //DotEnv().load('.env');
 
     this.googleKey = 'AIzaSyAjNnwNrnkC3HbvSOdfNF34ALGe7iJaU90';
     this._places = GoogleMapsPlaces(apiKey: googleKey);
@@ -90,9 +87,6 @@ Widget buildLocations() {
     itemBuilder: (BuildContext context, int index){
       
       return Row(
-        
-        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        // crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
            Column(
             children: <Widget>[
@@ -103,7 +97,6 @@ Widget buildLocations() {
           Padding(padding: EdgeInsets.only(right: 10)),
           Flexible(
             child: Column(
-              // crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end, 

@@ -1,17 +1,11 @@
-import 'package:darksky_weather/darksky_weather_io.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:latlong/latlong.dart';
 import 'package:location/location.dart' as loc;
-import 'package:weathernow/util/darksky.dart';
 import '../model/city.dart';
 import '../model/CityModel.dart';
 import '../model/db_utils.dart';
-import 'google_search.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:google_maps_webservice/places.dart';
-//import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 
 class CityList extends StatefulWidget {
   CityList({Key key, this.title}) : super(key: key);
@@ -25,10 +19,6 @@ class CityList extends StatefulWidget {
 class _CityListState extends State<CityList> {
 
   final _model = CityModel();
-  var _selectedIndex;
-  var _lastInsertedId = 0;
-  var _geoLocator = Geolocator();
-
 
   String googleKey;
   GoogleMapsPlaces _places;
@@ -141,7 +131,8 @@ class _CityListState extends State<CityList> {
       City newCity = City(name: locationStr, latitude: lat.toString(), longitude: long.toString());
 
       print("New City Added!");
-      _lastInsertedId = await _model.insertCity(newCity);
+
+      await _model.insertCity(newCity);
 
       setState(() {
         
@@ -228,7 +219,6 @@ class _CityListState extends State<CityList> {
                 // opens weather detail-view of on-clicked city with passed LatLng
                 print(city.id.toString() + " was pressed...");
                 LatLng _location = LatLng(double.parse(city.latitude), double.parse(city.longitude));
-                // just pop city here...
                 Navigator.pop(context, _location);
               }
             ),

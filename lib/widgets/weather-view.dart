@@ -9,7 +9,6 @@ import 'package:weathernow/widgets/settings.dart';
 import '../util/darksky.dart';
 import 'manage-cities.dart';
 import 'weather_map.dart';
-import '../model/city.dart';
 import 'package:weathernow/widgets/reminder.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:weathernow/model/weekdayForecast.dart';
@@ -148,7 +147,7 @@ class _WeatherViewState extends State<WeatherView> {
 
                     // 5 day forecast box
                     Padding(padding: EdgeInsets.symmetric(vertical: 30)),
-                    _Make5DayForcast(snapshot),
+                    make5DayForcast(snapshot),
 
                     // Weekday Low + High Chart
                     Container(
@@ -293,7 +292,7 @@ class _WeatherViewState extends State<WeatherView> {
     );
   }
 
-  Widget _Make5DayForcast(AsyncSnapshot<dynamic> snapshot){
+  Widget make5DayForcast(AsyncSnapshot<dynamic> snapshot){
     List<Widget> panes = [];
     for(int x = 1; x <= 5; x++){
       panes.add(
@@ -334,8 +333,16 @@ class _WeatherViewState extends State<WeatherView> {
   Future<void> _findCityName(double lat, double long) async{
     var address = await Geocoder.local.findAddressesFromCoordinates(Coordinates(lat, long));
 
-    // handles when current devices lcoality is null
-    if (address.first.locality == null) {
+    // if country is specified
+    if (address.first.adminArea == null) {
+      locationTitle = address.first.countryName;
+    }
+    // if city is specified
+    else if (address.first.subAdminArea == null) {
+      locationTitle = address.first.adminArea + ", " + address.first.countryName;
+    }
+    // handles when current devices locoality is null
+    else if (address.first.locality == null) {
       locationTitle = address.first.subAdminArea + ", " + address.first.adminArea;
     }
     else {
@@ -380,7 +387,7 @@ class _WeatherViewState extends State<WeatherView> {
   }
 
   Future<void> _reminderPage(BuildContext context) async{
-    var event = await Navigator.push(
+    await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => ReminderPage(
@@ -392,8 +399,8 @@ class _WeatherViewState extends State<WeatherView> {
   }
 
   Future<void> _settingsPage(BuildContext context) async{
-    
-    var event = await Navigator.push(
+  
+    await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => SettingsPage(
@@ -405,7 +412,7 @@ class _WeatherViewState extends State<WeatherView> {
   }
 
   Future<void> _mapPage(BuildContext context) async{
-    var event = await Navigator.push(
+    await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => MapPage(
@@ -418,14 +425,11 @@ class _WeatherViewState extends State<WeatherView> {
   Future<void> _communityPhotosPage(BuildContext context) async {
     Navigator.pop(context);
     
-    City result = await Navigator.push(
+    await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => CommunityPhotos()),
     );
 
-    if (result != null) {
-      print(result);
-    }
   }
 
 }

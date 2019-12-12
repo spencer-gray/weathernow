@@ -6,15 +6,15 @@ import 'package:dynamic_theme/dynamic_theme.dart';
 import "package:flutter/material.dart";
 
 class SettingsPage extends StatefulWidget {
-  String title;
+  final String title;
 
   SettingsPage({this.title});
 
   @override
-  _buildSettingsPage createState() => _buildSettingsPage();
+  BuildSettingsPage createState() => BuildSettingsPage();
 }
 
-class _buildSettingsPage extends State<SettingsPage> {
+class BuildSettingsPage extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
