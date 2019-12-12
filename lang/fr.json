@@ -14,6 +14,26 @@
         "saturday": "samedi" 
     },
 
+    "weather_data": {
+        "wind_speed": "Vitesse du Vent",
+        "cloud_cover": "Couverture Nuageuse",
+        "precipitation": "Précipitation",
+        "precipitation_type": "Type de Précipitation",
+        "ozone": "Ozone",
+        "dew_point": "Point de Rosée",
+        "visibility": "Visibilité",
+        "pressure": "Pression"
+    },
+
+    "menus": {
+        "manage_locations": "Gérer les Emplacements",
+        "map": "Carte",
+        "community_photos": "Photos de la communauté",
+        "reminders": "Rappels",
+        "settings": "Paramètres",
+        "close": "proche"
+    },
+
     "settings": {
         "dark_mode": "Mode sombre",
         "notifications": "Notifications",

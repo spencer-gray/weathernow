@@ -21,7 +21,7 @@ class _CommunityPhotosState extends State<CommunityPhotos> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Community Photos"),
+        title: Text(widget.title),
       ),
       body: listGrades(context),
       floatingActionButton: FloatingActionButton(

@@ -12,7 +12,6 @@ import 'weather_map.dart';
 import 'package:weathernow/widgets/reminder.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:weathernow/model/weekdayForecast.dart';
-import '../util/app_localizations.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
 class WeatherView extends StatefulWidget {
@@ -49,17 +48,15 @@ class _WeatherViewState extends State<WeatherView> {
 
   @override
   Widget build(BuildContext context) {
-    
-    print(FlutterI18n.translate(context, "weekdays.monday"));
 
     weekdays = [
+      FlutterI18n.translate(context, "weekdays.sunday"),
       FlutterI18n.translate(context, "weekdays.monday"),
       FlutterI18n.translate(context, "weekdays.tuesday"),
       FlutterI18n.translate(context, "weekdays.wednesday"),
       FlutterI18n.translate(context, "weekdays.thursday"),
       FlutterI18n.translate(context, "weekdays.friday"),
       FlutterI18n.translate(context, "weekdays.saturday"),
-      FlutterI18n.translate(context, "weekdays.sunday"),
     ];
 
     _loadForecasts();
@@ -202,35 +199,35 @@ class _WeatherViewState extends State<WeatherView> {
                       rows: [
                         DataRow(
                           cells: [
-                          DataCell(Text('Wind Speed', style: TextStyle(fontSize: 11))),
+                          DataCell(Text(FlutterI18n.translate(context, 'weather_data.wind_speed'), style: TextStyle(fontSize: 11))),
                           DataCell(Text((snapshot.data.currently.windSpeed*1.60934).toStringAsFixed(2) + " km/h", style: TextStyle(fontSize: 11)))
                         ]),
                         DataRow(cells: [
-                          DataCell(Text('Cloud Cover', style: TextStyle(fontSize: 11))),
+                          DataCell(Text(FlutterI18n.translate(context, 'weather_data.cloud_cover'), style: TextStyle(fontSize: 11))),
                           DataCell(Text((snapshot.data.currently.cloudCover*100).round().toString() + '%', style: TextStyle(fontSize: 11)))
                         ]),
                         DataRow(cells: [
-                          DataCell(Text('Precipitation', style: TextStyle(fontSize: 11))),
+                          DataCell(Text(FlutterI18n.translate(context, 'weather_data.precipitation'), style: TextStyle(fontSize: 11))),
                           DataCell(Text((snapshot.data.currently.humidity*100).round().toString() + '%', style: TextStyle(fontSize: 11)))
                         ]),
                         DataRow(cells: [
-                          DataCell(Text('Precipitation\nType', style: TextStyle(fontSize: 11))),
+                          DataCell(Text(FlutterI18n.translate(context, 'weather_data.precipitation_type'), softWrap: true, style: TextStyle(fontSize: 11)),),
                           DataCell(Text(snapshot.data.currently.precipType.toString(), style: TextStyle(fontSize: 11)))
                         ]),
                         DataRow(cells: [
-                          DataCell(Text('Ozone', style: TextStyle(fontSize: 11))),
+                          DataCell(Text(FlutterI18n.translate(context, 'weather_data.ozone'), style: TextStyle(fontSize: 11))),
                           DataCell(Text(snapshot.data.currently.ozone.toString() + 'DU', style: TextStyle(fontSize: 11)))
                         ]),
                         DataRow(cells: [
-                          DataCell(Text('Dew Point', style: TextStyle(fontSize: 11))),
+                          DataCell(Text(FlutterI18n.translate(context, 'weather_data.dew_point'), style: TextStyle(fontSize: 11))),
                           DataCell(Text(snapshot.data.currently.dewPoint.toString() + '\xb0C', style: TextStyle(fontSize: 11)))
                         ]),
                         DataRow(cells: [
-                          DataCell(Text('Visibility', style: TextStyle(fontSize: 11))),
+                          DataCell(Text(FlutterI18n.translate(context, 'weather_data.visibility'), style: TextStyle(fontSize: 11))),
                           DataCell(Text(snapshot.data.currently.visibility.toString().substring(0, 4), style: TextStyle(fontSize: 11)))
                         ]),
                         DataRow(cells: [
-                          DataCell(Text('Pressure', style: TextStyle(fontSize: 11))),
+                          DataCell(Text(FlutterI18n.translate(context, 'weather_data.pressure'), style: TextStyle(fontSize: 11))),
                           DataCell(Text(snapshot.data.currently.pressure.round().toString() + ' mbar', style: TextStyle(fontSize: 11)))
                         ]),
                       ]
@@ -247,12 +244,12 @@ class _WeatherViewState extends State<WeatherView> {
                 children: <Widget>[
                   ListTile(
                     leading: Icon(Icons.location_city),
-                    title: Text('Manage Locations'),
+                    title: Text(FlutterI18n.translate(context, 'menus.manage_locations')),
                     onTap: () => _manageCities(context),
                   ),
                   ListTile(
                     leading: Icon(Icons.map),
-                    title: Text('Map'),
+                    title: Text(FlutterI18n.translate(context, 'menus.map')),
                     onTap: () {
                       Navigator.of(context).pop();
                       _mapPage(context);
@@ -260,14 +257,14 @@ class _WeatherViewState extends State<WeatherView> {
                   ),
                    ListTile(
                     leading: Icon(Icons.photo),
-                    title: Text('Community Photos'),
+                    title: Text(FlutterI18n.translate(context, 'menus.community_photos')),
                     //onTap: () => {},
                     // (WORK IN PROGRESS)
                     onTap: () => _communityPhotosPage(context),
                   ),
                   notif? ListTile(
                     leading: Icon(Icons.calendar_today),
-                    title: Text(AppLocalizations.of(context).translate('Reminders')),
+                    title: Text(FlutterI18n.translate(context, 'menus.reminders')),
                     onTap: () {
                       Locale myLocale = Locale(ui.window.locale.languageCode);
                       print("Reminders pressed...");
@@ -278,7 +275,7 @@ class _WeatherViewState extends State<WeatherView> {
                   ) : Padding(padding: EdgeInsets.only(top: 0.0),),
                   ListTile(
                     leading: Icon(Icons.settings),
-                    title: Text('Settings'),
+                    title: Text(FlutterI18n.translate(context, 'menus.settings')),
                     onTap: () {
                       print("Settings pressed...");                      
                       Navigator.of(context).pop();
@@ -287,7 +284,7 @@ class _WeatherViewState extends State<WeatherView> {
                   ),
                   ListTile(
                     leading: Icon(Icons.close),
-                    title: Text('Close'),
+                    title: Text(FlutterI18n.translate(context, 'menus.close')),
                     onTap: () {
                       Navigator.pop(context);
                     }
@@ -386,7 +383,9 @@ class _WeatherViewState extends State<WeatherView> {
     
     LatLng location = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => CityList()),
+      MaterialPageRoute(builder: (context) => CityList(
+        title: FlutterI18n.translate(context, 'menus.manage_locations'),
+      )),
     );
 
     // Opens detailed weather view of the list view item pressed.
@@ -406,8 +405,7 @@ class _WeatherViewState extends State<WeatherView> {
       context,
       MaterialPageRoute(
         builder: (context) => ReminderPage(
-          title: AppLocalizations.of(context).translate('Reminders'),
-          
+          title: FlutterI18n.translate(context, 'menus.reminders'),
         ),
       ),
     );
@@ -419,7 +417,7 @@ class _WeatherViewState extends State<WeatherView> {
       context,
       MaterialPageRoute(
         builder: (context) => SettingsPage(
-          title: "Settings Page",
+          title: FlutterI18n.translate(context, 'menus.settings'),
           notif: notif,
         ),
       ),
@@ -433,7 +431,7 @@ class _WeatherViewState extends State<WeatherView> {
       context,
       MaterialPageRoute(
         builder: (context) => MapPage(
-          title: "Map Page",
+          title: FlutterI18n.translate(context, 'menus.map'),
         ),
       ),
     );
@@ -444,7 +442,9 @@ class _WeatherViewState extends State<WeatherView> {
     
     await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => CommunityPhotos()),
+      MaterialPageRoute(builder: (context) => CommunityPhotos(
+        title: FlutterI18n.translate(context, 'menus.community_photos'),
+      )),
     );
 
   }

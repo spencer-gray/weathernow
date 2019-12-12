@@ -17,19 +17,23 @@ class SettingsPage extends StatefulWidget {
 }
 
 class BuildSettingsPage extends State<SettingsPage> {
+
+  bool returnNotif;
+
   @override
   Widget build(BuildContext context) {
 
     List<String> locales = ['en', 'fr'];
     String _current = Localizations.localeOf(context).languageCode;
-    bool returnNotif = widget.notif;
-
+    if(returnNotif == null)
+      returnNotif = widget.notif;
+    
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
         leading: IconButton(
           icon:Icon(Icons.arrow_back),
-          onPressed:() => Navigator.of(context).pop(widget.notif),
+          onPressed:() => Navigator.of(context).pop(returnNotif),
         ),
       ),
       body: Align(
@@ -68,8 +72,10 @@ class BuildSettingsPage extends State<SettingsPage> {
                   value: returnNotif,
                   onChanged: (value) {
                     setState(() {
-                      if(value) returnNotif = true;
-                      else returnNotif = false;
+                      print(value);
+                      if(value){returnNotif = true;}
+                      else {returnNotif = false;}
+                      print(returnNotif);
                     });
                   }
                 ),

@@ -45,7 +45,7 @@ class _CityListState extends State<CityList> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Manage Locations"),
+        title: Text(widget.title),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.location_on),
