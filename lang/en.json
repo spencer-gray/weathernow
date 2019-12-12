@@ -34,6 +34,18 @@
         "close": "Close"
     },
 
+    "reminder": {
+        "select_date": "Select Date",
+        "select_time": "Select Time",
+        "jacket": "Wear a jacket to dinner",
+        "add_new_reminder": "Add New Reminder",
+        "see_upcoming_reminders": "See Upcoming Reminders",
+        "creating_notification": "Creating notification",
+        "invalid": "Invalid time input, must select a time later than current",
+        "no_upcoming": "You have no upcoming reminders",
+        "your_upcoming_reminders": "Your Upcoming Reminders"
+    },
+
     "settings": {
         "dark_mode": "Dark Mode",
         "notifications": "Notifications",

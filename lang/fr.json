@@ -34,6 +34,18 @@
         "close": "proche"
     },
 
+    "reminder": {
+        "select_date": "Sélectionner une date",
+        "select_time": "Sélectionnez l'heure",
+        "jacket": "Porter une veste pour dînerr",
+        "add_new_reminder": "Ajouter un nouveau rappel",
+        "see_upcoming_reminders": "Voir les rappels à venir",
+        "creating_notification": "Création d'une notification",
+        "invalid": "Entrée d'heure non valide, doit sélectionner une heure plus tard que l'heure actuelle",
+        "no_upcoming": "Vous n'avez aucun rappel à venir",
+        "your_upcoming_reminders": "Vos rappels à venir"
+    },
+
     "settings": {
         "dark_mode": "Mode sombre",
         "notifications": "Notifications",

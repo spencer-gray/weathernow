@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../util/notifications.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 
 class ReminderPage extends StatefulWidget {
   ReminderPage({Key key, this.title}) : super(key: key);
@@ -44,7 +45,7 @@ class _ReminderPageState extends State<ReminderPage> {
               child: Row(children: [
                 // button for picking date
                 RaisedButton(
-                  child: Text('Select Date'),
+                  child: Text(FlutterI18n.translate(context, "reminder.select_date")),
                   textColor: Colors.white,
                   color: Colors.grey,
                   onPressed: () {
@@ -79,7 +80,7 @@ class _ReminderPageState extends State<ReminderPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   RaisedButton(
-                    child: Text('Select Time'),
+                    child: Text(FlutterI18n.translate(context, "reminder.select_time")),
                     textColor: Colors.white,
                     color: Colors.grey,
                     onPressed: () {
@@ -115,7 +116,7 @@ class _ReminderPageState extends State<ReminderPage> {
               child: TextFormField(
                 controller: noteController,
                 decoration: InputDecoration(
-                    hintText: "''Wear a jacket to dinner''",
+                    hintText: "''${FlutterI18n.translate(context, "reminder.jacket")}''",
                     icon: Icon(Icons.create)),
                 onSaved: (String value) {
                   print('Saving note $value');
@@ -136,17 +137,16 @@ class _ReminderPageState extends State<ReminderPage> {
               padding: EdgeInsets.only(top: 20),
               child: FlatButton.icon(
                   icon: Icon(Icons.add_alarm),
-                  label: Text('Add New Reminder'),
+                  label: Text(FlutterI18n.translate(context, "reminder.add_new_reminder")),
                   onPressed: () {
                     print(_eventDate.toString());
                     if (_toDateInt(_eventDate) > _toDateInt(now)) {
-                      _displaySnackBar(context, 'Creating notification...');
+                      _displaySnackBar(context, "${FlutterI18n.translate(context, "reminder.creating_notification")}...");
                       _notificationLater(noteController.text, _eventDate);
                     } else if (_toTimeInt(_eventDate) < _toTimeInt(now)) {
-                      _displaySnackBar(context,
-                          'Invalid time input, must select a time later than current!');
+                      _displaySnackBar(context, FlutterI18n.translate(context, "reminder.invalid"));
                     } else {
-                      _displaySnackBar(context, 'Creating notification...');
+                      _displaySnackBar(context, "${FlutterI18n.translate(context, "reminder.creating_notification")}...");
                       _notificationLater(noteController.text, _eventDate);
                     }
                   }),
@@ -154,7 +154,7 @@ class _ReminderPageState extends State<ReminderPage> {
             // button to see any pending reminders
             Expanded(
               child: FlatButton.icon(
-                label: Text('See Upcoming Reminders'),
+                label: Text(FlutterI18n.translate(context, "reminder.see_upcoming_reminders")),
                 icon: Icon(Icons.list),
                 onPressed: _showPendingNotifications,
               ),
@@ -205,7 +205,7 @@ class _ReminderPageState extends State<ReminderPage> {
           '\n\t\t${pendingRequest.body}\n';
     }
     if (pendingString == '') {
-      pendingString = 'You have no upcoming reminders!';
+      pendingString = '${FlutterI18n.translate(context, "reminder.no_upcoming")}!';
     }
 
     showDialog<void>(
@@ -213,14 +213,14 @@ class _ReminderPageState extends State<ReminderPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Your Upcoming Reminders'),
+          title: Text(FlutterI18n.translate(context, "reminder.your_upcoming_reminders")),
           content: Text(
             pendingString,
             style: TextStyle(fontStyle: FontStyle.italic),
           ),
           actions: <Widget>[
             FlatButton(
-              child: Text('Close'),
+              child: Text(FlutterI18n.translate(context, "menus.close")),
               onPressed: () {
                 Navigator.of(context).pop();
               },

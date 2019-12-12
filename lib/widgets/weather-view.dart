@@ -30,7 +30,7 @@ class _WeatherViewState extends State<WeatherView> {
   Future<Forecast> forecast;
   bool currentLocCheck = true;
   String locationTitle = " ";
-  bool notif = false;
+  bool notif = true;
 
   Future<LatLng> findCurrentLocation() async {
     var location = new Location();
