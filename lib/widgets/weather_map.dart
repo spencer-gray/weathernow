@@ -6,6 +6,7 @@ import 'package:geolocator/geolocator.dart';
 import 'dart:async';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:google_maps_webservice/places.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class MapPage extends StatefulWidget{
 
@@ -30,7 +31,8 @@ class _MapPageState extends State<MapPage>{
   void initState(){
     _getCurrentLocation();
     
-    this.googleKey = 'AIzaSyAjNnwNrnkC3HbvSOdfNF34ALGe7iJaU90';
+    DotEnv().load('.env');
+    this.googleKey = DotEnv().env['GOOGLE_PLACES_API'];
     this._mapsPlaces = GoogleMapsPlaces(apiKey: googleKey);
 
     super.initState();
@@ -143,7 +145,7 @@ class _MapPageState extends State<MapPage>{
   }
 
   Future<String> _getAPI() async{
-    return "pk.eyJ1IjoiamltbXlqb2U2NyIsImEiOiJjazJ3ZW55MjgwMTU4M2JvbTd1MzRybDNmIn0.AE0eYpvn456vVKXO8EUQ3Q";
+    return DotEnv().env["MAPBOX_API"];
   }
 
 }
